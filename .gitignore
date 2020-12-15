@@ -27,3 +27,5 @@
 *.synctex.gz
 !**/img/*.pdf
 *_temp.tex
+
+.DS_STORE
