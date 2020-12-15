@@ -1,0 +1,98 @@
+\documentclass[
+	12pt,
+	BCOR=5mm,
+	DIV=12,
+	headinclude=on,
+	footinclude=off,
+	parskip=half,
+	bibliography=totoc,
+	listof=entryprefix,
+	toc=listof,
+	numbers=noenddot,
+	plainfootsepline
+]{scrreprt}
+
+%	Konfigurationsdatei einziehen
+\input{config}
+
+\begin{document}
+
+\TitelDerArbeit{Entwurf und Implementierung einer Referenzarchitektur zur automatischen Erzeugung digitaler Zwillinge}
+\AutorDerArbeit{Aaron Schweig}
+\Firma{Hays AG}
+\Kurs{WWI18SEC}
+
+\input{titlepage}
+
+
+% Ehrenwörtliche Erklärung ewerkl.tex einziehen
+\input{ewerkl.tex}
+
+\pagenumbering{roman} % Römische Seitennummerierung
+\normalfont
+
+%	Kurzfassung
+\input{abstract}
+
+%	Inhaltsverzeichnis
+\tableofcontents
+
+%	Abbildungsverzeichnis
+\listoffigures
+
+%	Tabellenverzeichnis
+\listoftables
+
+%	Listingverzeichnis
+% \lstlistoflistings
+
+% 	Abkürzungsverzeichnis (siehe Datei acronyms.tex!)
+\input{acronyms}
+\ohead{Acronyms} % Neue Header-Definition
+
+%--------------------------------
+% Start des Textteils der Arbeit
+%--------------------------------
+\clearpage
+\ihead{\chaptername~\thechapter}
+\ohead{\headmark}
+\pagenumbering{arabic}
+
+
+\chapter{Einleitung}
+
+In den letzten Jahren werden immer mehr monolithische Applikation zu Microservices transformiert. So werden aus wenigen großen Anwendungen hunderte kleine Services. Die Verwaltung dieser Services wird immer mehr zu einer Herausforderung, die Unternehmen meistern müssen. Dabei kommt es nicht nur darauf an, den Überblick über alle Services zu behalten, es muss auch bei einem Ausfall eines Services bekannt sein, wie dieser schnellstmöglich behoben werden kann, um Schaden zu vermeiden. 
+
+In folgender Arbeit wird ein Konzept für eine graphbasierte Service-Registry entworfen. Mithilfe dieser Registry können Fehler nicht nur schnell lokalisiert werden, sondern es können auch deren Auswirkungen auf andere Services festgestellt werden.
+
+Dafür werden zunächst die charakterisierenden Eigenschaften eines Microservices erklärt. Danach wird erläutert, wie genau Microservices observiert werden können. Um hunderte Services verwalten zu können, müssen bestimmte Konzepte evaluiert werden. Deshalb wird erläutert, wie Governance in einer Microservicearchitektur funktioniert. Im Anschluss wird dann eine Lücke zwischen diesen beiden elementaren Säulen aufgezeigt, die mithilfe des vorgestellten Konzepts befüllt werden soll. Um später beurteilen zu können, ob das vorgestellte Konzept tatsächlich passend ist, werden fünf Kriterien erarbeitet.
+
+Im folgenden Kapitel wird zu Beginn versucht ein mathematisches Modell zur Beschreibung des Konzepts zu erstellen. Dazu werden grundlegende Begriffe aus der Graphentheorie definiert. Mithilfe dieses Modells werden dann konkrete Vorschläge erarbeitet, die eine theoretische Grundlage für ein zu implementierendes Konzept bilden. Die graphbasierte Service-Registry besteht aus zwei großen Komponeten, einer zentralen und einer dezentralen. Die Idee und das Zusammenspiel zwischen beiden Komponeten wird aufgezeigt. Zudem wird noch eine bereits bestehende Alternative vorgestellt.
+
+Am Ende wird dann ein Vergleich aller Methoden vorgenommen, um eine Empfehlung für eine Implementierung aussprechen zu können.
+
+% % CHAPTER: Microservice - Observability - Governance
+% \input{chapters/microservice_observability_gouvernance.tex}
+
+% % CHAPTER: Konzept Service-Registry
+% \input{chapters/microservice_dependency_graph.tex}
+
+\chapter{Fazit und Ausblick}
+
+Im Rahmen dieser Arbeit wurden zunächst grundlegende Begriffe geklärt, die für ein grundlegendes Verständnis von Microservices wichtig sind. Dabei wurde unter anderem eine Definition von Microservices anhand ihrer Eigenschaften vorgenommen. Zusätzlich wurden wichtige Elemente der Observability und der Governance beschrieben. Für die daraus resultierende Problemstellung wurde ein Konzept vorgestellt, welches es ermöglicht einen dynamischen Überblick über die Services in einem Unternehmen zu erhalten. Dabei lag der Fokus vor allem auf der Herleitung des Konzepts. In zukünfigen Arbeiten könnte dieses Konzept an einigen Stellen erweitert werden. Es wäre beispielsweise wichtig zu untersuchen, ob es eine bessere Definition der Kapazitätsfunktion gibt, die dem Fluss zugrundeliegt. Dies könnte dann mithilfe gesammelter Hardwaredaten geschehen. Die Kapazitätsfunktion würde dann einen Zusammenhang zwischen der Nutzung und der Auslastung des Services beschreiben. Dies würde dem Graphen einen Mehrwert verleihen, da weitere Informationen vorhanden sind. Eine weitere Verbesserung des Konzepts könnte im Bereich der Darstellung von Services erreicht werden. Ein wichtiger Aspekt eines Microservices ist auch eine individuelle Skalierbarkeit. Werden Services nun skaliert, muss die Service-Registry erkennen, dass der neue Service ein Replikat ist und dies entsprechend in dem Graphen hinterlegen. Im aktuellen Konzept ist dieser Punkt noch nicht gelöst. Zusätzlich zur Skalierbarkeit müssen auch verschiedene Umgebungen in einer Service-Registry abgebildet werden können. Auch eine solche Erweiterung des Konzepts könnte untersucht werden.
+
+Eine weitere interessante Ergänzung geht vor allem auf die Verwendung der Daten für Vorhersagen, wie in \vref{chap:Anforderungen} beschrieben, ein. Es könnte z.B. eine Speicherung der verschiedenen Graphen in einer Timeseries-Datenbank durchgeführt werden, um anhand ehemaliger Graphen Vorhersagen über zukünftige Zustände eines Graphen treffen zu können.
+
+Zusammenfassend ist zu erkennen, dass in einer graphbasierten Registry ein großes Potenzial besteht, welches in viele verschiedene Richtungen weiterentwickelt werden kann. Wie in der Tabelle \vref{tab:Vergleich} zu sehen ist, ist es schwer die verschiedenen Ansätze miteinander zu vergleichen. Insbesondere der Vergleich zwischen dem Ansatz mithilfe von Elastic-Produkten und der graphbasierten Registry hinkt, da es sich um grundsätzlich unterschiedliche Tools handelt, die sich gegenseitig sehr gut ergänzen können. Daher kann gesagt werden, dass in einer Kombination der beiden Ansätze ein Mehrwert für den Endnutzer liegt.
+%	Literaturverzeichnis
+\clearpage
+\ihead{}
+\printbibliography[title=Literaturverzeichnis]
+\cleardoublepage
+
+% Der Anhang beginnt hier - jedes Kapitel wird alphabetisch aufgezählt. (Anhang A, B usw.)
+% \appendix
+% \ihead{\appendixname~\thechapter} % Neue Header-Definition
+
+
+\end{document}
