@@ -24,7 +24,7 @@
 *.xml
 *.xdy 
 ._*
-*.synctex.gz
+*.synctex.*
 !**/img/*.pdf
 *_temp.tex
 
