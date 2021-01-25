@@ -65,7 +65,7 @@
 		\item Was sind DTs
 		\begin{itemize}
 			\item Definitionen \autocite[\ppno~108953]{fuller2020digital}
-			\item Unterscheidung verschiedener Arten und Abgrenzung zum cyber-physical System
+			\item Unterscheidung verschiedener Arten und Abgrenzung zum CBS
 		\end{itemize}
 		\item Eigenschaften
 		\item Ökonomischer Nutzen
@@ -73,7 +73,6 @@
 			\item Vorteile in verschiedenen Bereichen der Anwendung
 			\item Industrie
 			\item Product-Lifecycle
-			\item Schaeffler Windanlagen?
 			\item E-Technik
 			\item Simulationen
 			\item etc.
@@ -91,13 +90,51 @@
 		\item Architekturkonzept
 		\begin{itemize}
 			\item Wieso Device-Registry? Anwendung, Anforderungen, Nutzen, etc.
+			\begin{itemize}
+				\item Eine Device Registry muss verschiedene Aufgaben erfüllen
+				\item Muss Devices registrieren/verwalten können
+				\item Verbindungen der Devices müssen abrufbar sein
+				\item Authentifizierung/-sinformationen der Devices muss gespeichert werden
+				\item bei generischer Nutzung $\rightarrow$ Scoping via namespace/tenant wichtig und muss dem device zugenordnet werden können
+			\end{itemize}
 			\item Authentifizierung, DaaS(Device as a Service), massenhafte Authentifizierung
+			\begin{itemize}
+				\item Was für verscheidene Methoden gibt es?
+				\item Welche werden verwendet?
+				\item Was wäre möglich, wo liegt der aktuelle Stand der Forschung
+			\end{itemize}
 			\item Common Schnittstellenformate, welche sind im Umlauf wie können sie zusammengeführt werden, sodass alle obigen Anforderungen noch laufen und erfüllt sind?
+			\begin{itemize}
+				\item Ein wenig die funktionalität und Idee hinter Eclipse Hono erklären. Dabei kurz die Grundlagen jedes Formats erklären
+				\item MQTT
+				\item AMQP
+				\item HTTP
+				\item WS (?)
+			\end{itemize}
 			\item Unterscheidung zwischen einer Device-Registry und der Speicherung als DT
+			\begin{itemize}
+				\item Hier liegt der Übergang der Arbeit; Es müssen von Geräten in der Device Registy DTs gebildet werden, nach möglichkeit automatisiert, sodass dann Daten des Gerätes übertragen werden
+			\end{itemize}
 			\item Was muss eine DT-Architektur mit sich bringen, damit Definition erfüllt Ist?
-			\item Kombination zwischen Device-Registry und DT (hier liegt das Kernproblem!)
+			\begin{itemize}
+				\item Hier ein wenig auf die Ditto Idee eingehen.
+				\item Konzept hinter Connections erklären; Was sind Connections, Was bringt das an Vorteilen mit sich
+				\item Kombination zwischen Device-Registry und DT (hier liegt das Kernproblem!)
+			\end{itemize}
 			\item verschiedene Zugriffsarten auf die Daten eines DT
+			\begin{itemize}
+				\item Wie wird das alles exposed in Ditto?
+				\item Kommt natürlich auf den Anwendungsfall an
+				\item HTTP/WS
+				\item AMQP
+				\item usw.?
+			\end{itemize}
 			\item Welche Daten sind vorhanden und wie kann sichergestellt werden, dass ein speziell Modell für DT's vorliegt? $\rightarrow$ Hier kommt dan Vorto ins Spiel. Kurz das Konzept und Idee dahinter erläutern
+			\begin{itemize}
+				\item Vorto als Strukturregistry.
+				\item Wieso ist das so wichtig
+				\item welche vorteile gibt es, ein solches ding zu haben
+			\end{itemize}
 		\end{itemize}
 		\item Softwarekonzept
 		\begin{itemize}
@@ -106,10 +143,15 @@
 	\end{enumerate}
 	\item Prototypische Implementierung 
 	\item Fazit und Ausblick
+	\begin{itemize}
+		\item Mögliche Integration in die Eclipse Landschaft
+		\item ...
+	\end{itemize}
 \end{enumerate}
 
 \includegraphics[width=1.0\linewidth]{img/automatic_creation.png}
 \includegraphics[width=1.0\linewidth]{img/device_registration.png}
+\includegraphics[width=1.0\linewidth]{img/device-registry.png}
 
 \chapter{Einleitung}
 
