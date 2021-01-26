@@ -4,7 +4,7 @@ In folgendem Kapitel wird betrachtet, wie ein \ac{DT} definiert ist und welche E
 
 \section{Was sind digitale Zwillinge?}
 
-Innerhalb der Literatur finden sich viele verschiedene Ansätze digitale Zwillinge zu beschreiben. Dabei sticht vorallem heraus, dass oftmals nur bestimmte Teilbereiche sehr detailliert betrachten werden. Dies  führt dazu, dass andere Bereiche, eher weniger detaillreich beschrieben werden. Innerhalb eines Papers von \citeauthor{barricelli2019survey} wird versucht all diese Definitionen zusammenzuführen, mit dem Ziel eine genauere Defintion eines \ac{DT}'s zu erhalten. Dafür werden insgesamt 75 Paper verschiedenster Verläge ausgewertet.\autocite[S. 4, Kapitel 4]{barricelli2019survey} Bei dieser Auswertung ließen sich mehrere Kerneigenschaften digitaler Zwillinge feststellen.
+Innerhalb der Literatur finden sich viele verschiedene Ansätze digitale Zwillinge zu beschreiben. Dabei sticht vorallem heraus, dass oftmals nur bestimmte Teilbereiche sehr detailliert betrachten werden. Dies  führt dazu, dass andere Bereiche, eher weniger detaillreich beschrieben werden. Innerhalb eines Papers von \citeauthor{barricelli2019survey} wird versucht all diese Definitionen zusammenzuführen, mit dem Ziel eine genauere Defintion eines \ac{DT}'s zu erhalten. Dafür werden insgesamt 75 Paper verschiedenster Verläge ausgewertet.\autocite[S. 4, Kapitel 4]{barricelli2019survey} Bei dieser Auswertung ließen sich mehrere Kerneigenschaften digitaler Zwillinge feststellen.\autocite[\ppno~108953]{fuller2020digital}
 
 \begin{enumerate}
     \item \enquote{\ac{DT}s can be deﬁned as (physical and/or virtual) machines or computer-based models that are simulating, emulating, mirroring, or \enquote{twinning} the life of a physical entity, which may be an object, a process, a human, or a human-related feature}
@@ -24,27 +24,24 @@ Ein digitaler Zwilling muss eine eindeutige Verbindung zu seinem realen Ursprung
 
 Ein \ac{DT} ist dank der obigen Punkte nun ein exaktes Abbild seines realen Gegenstücks und sowohl der \ac{DT} als auch das physische Objekt sind eindeutig identifizierbar. Auf Basis dieser Grundlage können die gesammelten Daten genutzt werden, um das physische Objekt zu beobachten, evtl. Anomalien festzustellen, usw. Außerdem können zukünfitge Konfigurationsmöglichkeiten einer virtuellen Umgebung getestet werden, bevor diese an kritischen Punkten in einer produktiven Umgebung eingesetzt werden. Diese Tests sind besonders repräsentativ, da so auch Auswirkungen auf die gesamte Umwelt überwacht werden können, ohne dabei Abhängigkeiten mit manuellem Aufwand überprüfen zu müssen. Es kann also mithilfe von \ac{DT}s festgestellt werden, ob und wie stark korrelationen zwischen verscheidenen Eigenschaften bestehen. Ein weiteres Feld, welches sich durch die Nutzung digitaler Zwillinge erschließen lässt ist die \enquote{predicitve Maintanance}. Dabei handelt es sich um ein Konzept, welches vor allem in der Industrie genutzt werden kann. Denn auf Basis der durch den \ac{DT} gesammelten Daten können mithilfe von Datenanalysen, Methoden aus dem Big-Data Bereich und der Verarbeitung durch kunstliche Intelligenz, zukünfitge Zustände des \ac{DT}s abgeleitet werden. Da der \ac{DT} aber nur eine Spiegelung eines realen Objektes ist, die Daten somit von dort stammen, kann angenomen werden, dass ein zukünfitger Zustand des \ac{DT}s auch der zukünfitge Zustand seines realen Gegenstücks ist. Somit kann beispielsweise im Fall einer Maschine eine Wartung geplant und durchgeführt werden, ohne einen tatsächlichen Fehlerfall registrieren zu müssen.
 
+Betrachtet man einen \ac{DT} nun in seiner Umgebung so lässt sich feststellen, dass der \ac{DT} den virtuellen Teil eines cyperphysischen Systems darstellt.
 
 \subsection{Wie können digitale Zwillinge eingesetzt werden?}
 
+Digitiale Zwillinge finden in einer Vielzahl von Bereichen Anwendung. Besonders populär ist der Einsatz von \ac{DT}s im Bereich der Industrie 4.0. \citeauthor{tao2018digital} beschreibt in seiner Ausarbeitung viele verschiedene Szenarien, in welcher der Einsatz digitaler Zwillinge während einer Produktion vorteilhaft ist. Dabei spielt vor allem die in Fähigkeit der \ac{DT}s genutzt, den aktuellen (realen) Zustand des Objektes im physichen Raum abzubilden. So können beispielsweise Produktionsprozesse auf Basis realer Daten in Echtzeit überwacht werden. \autocite{tao2018digital} So wird von \citeauthor{weyer2016future} beschrieben, wie ein \enquote{human operator} mithilfe digitaler Zwillinge komlpexe Produktionsprozesse überwachen kann. Zusätzlich wird er dadurch befähigt zeitnah, falls nötig, Anpassungen vorzunehmen, die zur Optimierung eines Prozesses beitragen können.\autocite{weyer2016future}
+
+Ein weiterer wichtiger Aspekt, ist die Möglichkeit der Durchführung von Simulationen mittels der durch die \ac{DT}s bereitgestellten Daten. So können unter zuhilfenahme zusätzlicher Daten (z.B. Umgebungsdaten, etc.) komplexere Szenarien abgebildetet werden. Zusätzlich dazu können so autonome Systeme befähigt werden, Anpassungen, die ihnen auf Basis der Daten als sinnvoll erscheinen, in einer virtuellen Umgebung zu simulieren, um ihre Entscheidung zu validieren. \autocite{rosen2015importance}\\
+Innerhalb der Industrie können digitae Zwillinge eingesetzt werden, um verschiedenste Optimierungen auf Basis von Daten und den dadurch entstehenden Erfahrungswerten vorzuschlagen, oder im Fall autonomer Systeme, auch durchzuführen. In den letzen Jahren würde gerade im diesem Bereich sehr viel Forschung veröffentlicht. \autocite[S. 167657]{barricelli2019survey} Dies lässt darauf schließen, dass viele Unternehmen versuchen die durch den Einsatz digitaler Zwillinge enstehenden Vorteile zu nutzen und zu vergrößern. 
+
+Die Industrie ist allerdings nicht der einzige Ort, an dem \ac{DT}s vorteilhaft eingesetzt werden und wurden. Der Bereich der \ac{PHM} profitiert auch von der Nutzung digitaler Zwillinge. \citeauthor{tuegel2011reengineering} Beschrieb bereits im Jahr \citeyear{tuegel2011reengineering} den Einsatz von \ac{DT}s zur Vorhersage des Lebenszyklus von Luftfahrzeugen. Dabei konnte durch die Abbildung in einer virtuellen Umgebung komplexe zusammenhängende Physiksimulationen durchgeführt werden. Damit konnten Vereinfachungen in verscheidenen Bereichen der Wartung eines Luftfahrzeugs erreicht werden.\autocites{tao2018digital}{tuegel2011reengineering}
+
+Des weiteren lassen sich Forschungen für Anwendung im medizinischen Bereich finden. \autocites{barricelli2019survey}{tao2018digital}
+
+Große Weltweit agierende Unternehmen, erkennen und fördern den gewonnenen Nutzen durch \ac{DT}s. Dazu zählen Unternehmen wie:
 \begin{itemize}
-    \item Simulationen (wurde von der NASA und der AirForce verwendet und erfolgreich eingesetzt)
-    \item Medizinische Anwendung
-    \item Industry 4.0 \autocite[S. 2409]{tao2018digital}
-    \begin{itemize}
-        \item Nützlich zum monitoren von dem Produktionsprozess, da DTs die Möglichkeit haben, in real time Updates zu liefern
-        \item They argued that, since DTs can synchronize the physical and virtual spaces, human operators can depend on DTs to monitor a complex production process, make timely adjustments, and optimize the process \autocites{tao2018digital}{weyer2016future}
-        \item DTs can facilitate the adjustment of production operations based on both practical situation and simulation. Rosen et al. discussed the application of DTs in production operations. Since DTs could integrate a variety of data (e.g., environment data, operational data, and process data), autonomous systems can respond to state changes even during an ongoing operation [27].\autocite{rosen2015importance}
-        \item By connecting computer simulation with the physical system, the DT could reduce material waste and prolong machine lifetime \autocite{vachalek2017digital}
-    \end{itemize}
-    \item Prognostics-Health Management
-    \begin{itemize}
-        \item Tuegel et al. applied the DT to predict the structural life of the aircraft through multiphysics modeling, multiscale damage modeling, integration of the structural ﬁnite-element model (FEM) and damage models, uncertainty quantiﬁcation, and high-resolution structural analysis. They reported that the DT could facilitate the management of aircraft service life [13].\autocite{tuegel2011reengineering}
-    \end{itemize}
-    \item Beretis angewendet von: \autocite{tao2018digital}
-    \begin{itemize}
-        \item Siemens
-        \item Airbus
-        \item SAP SE
-    \end{itemize}
+    \item Siemens
+    \item Airbus
+    \item Bosch
+    \item SAP SE
 \end{itemize}
+
