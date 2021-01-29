@@ -40,6 +40,57 @@ Ein bekannter Nachteil symmetrischer Verschlüsselungsmethoden, ist der Schlüss
 
 Alternativ bieten sich dann noch Möglichkeiten asymmetrischer Verschlüsselungsarten an. Ein Vorteil dieser Art ist es, dass ein Schlüssel austausch sehr einfach erreicht werden kann, da der Aufbau der Verbindung auf Basis eines öffentlichen Schlüssels basiert. Nachteil dieser Methode ist es allerdings, dass der Verbindungsaufbau und die Geschwindigkeit der Verschlüsselung sehr langsam ist. Im speziellen wenn größere Datenmengen verschlüsselt werden müssen sind symmetrische Verschlüsselungen deutlich schneller. Außerdem stellen symmetrische Chiffren ein höheres Sicherheitsniveau zur Verfügung.
 
+Um soviele Vorteile wie möglich bei gleichzeitig so wenig Nachteilen wie nötig zu erhalten, ist es am sinnvollsten beide Ansätze miteinander zu kombinieren. Diese Idee wird bereits in der Internetkommunikation verwendet. Dabei wird mithilfe eines asymmetrischen Schlüsselpaars ein sichere Kanal zur Kommunikation für einen symmetrischen Schlüsselaustausch und die anschließende Verschlüsselung aufgebaut.
+
+Durch den Einsatz eines Zertifikates können die beschriebenen Vorteile erreicht werden.
+
+\subsubsection*{Aufbau eines Zertifikates}
+\begin{figure*}
+    \begin{verbatim}
+    Certificate  ::=  SEQUENCE  {
+        tbsCertificate       TBSCertificate,
+        signatureAlgorithm   AlgorithmIdentifier,
+        signatureValue       BIT STRING  }
+    
+    TBSCertificate  ::=  SEQUENCE  {
+        version         [0]  EXPLICIT Version DEFAULT v1,
+        serialNumber         CertificateSerialNumber,
+        signature            AlgorithmIdentifier,
+        issuer               Name,
+        validity             Validity,
+        subject              Name,
+        subjectPublicKeyInfo SubjectPublicKeyInfo,
+        issuerUniqueID  [1]  IMPLICIT UniqueIdentifier OPTIONAL,
+                                -- If present, version MUST be v2 or v3
+        subjectUniqueID [2]  IMPLICIT UniqueIdentifier OPTIONAL,
+                                -- If present, version MUST be v2 or v3
+        extensions      [3]  EXPLICIT Extensions OPTIONAL
+                                -- If present, version MUST be v3
+        }
+    
+    Version  ::=  INTEGER  {  v1(0), v2(1), v3(2)  }
+    
+    CertificateSerialNumber  ::=  INTEGER
+    
+    Validity ::= SEQUENCE {
+        notBefore      Time,
+        notAfter       Time }
+    
+    Time ::= CHOICE {
+        utcTime        UTCTime,
+        generalTime    GeneralizedTime }
+    
+    UniqueIdentifier  ::=  BIT STRING
+    
+    SubjectPublicKeyInfo  ::=  SEQUENCE  {
+        algorithm            AlgorithmIdentifier,
+        subjectPublicKey     BIT STRING  }
+    \end{verbatim}
+    \caption{Quelle: \fullcite{RFC3280}}
+\end{figure*}
+
+...
+
 \begin{figure}
     \centering
     \includegraphics[width=1.0\linewidth]{img/automatic_creation.png}
