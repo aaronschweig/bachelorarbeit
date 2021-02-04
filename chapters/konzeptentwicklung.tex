@@ -122,29 +122,50 @@ Dieser Nachteil kann allerdins ignoriert werden, sollten es eigene Geräte sein,
 
 \subsection{Vergleich beider Authentifizierungsvarianten}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=1.0\linewidth]{img/automatic_creation.png}
-    \caption[Automatische Erstellung digitaler Zwillinge]{Sequenzdiagramm des Ablaufs, sobald ein Gerät mit einem Netzwerk verbunden ist.\\Quelle: Eigene Darstellung.}
-    \label{fig:automatic_creation}
-\end{figure}
+\section{Sicherstellen der Device Connectivity in der Device Registry}
+
+Der Device Registry fällt ebenfalls die Aufgabe zu, sicherzustellen, dass eine Vielzahl verschiedener Kommunikationsprotokolle unterstützt wird, damit ein Verbindungsaufbau mit einer Vielzahl von Geräten möglich ist. Im folgenden werden verschiedene Kommunikationsprotokolle vorgestellt, sowie kurz deren jeweilige Vor- und Nachteile beleuchtet. Im nächsten Schritt wird die Wahl eines asynchronen, internen Kommunikationsmittels beschrieben.
+
+\subsection{MQTT}
+Bei dem \ac{MQTT} handelt es sich um ein sehr populäres Kommunikationsprotokoll, das in den letzten Jahren immer mehr an Popularität gewonnen hat. Das \ac{MQTT} Protokoll definiert folgende Bestandteile:
+
+\begin{definition}[MQTT\autocite{standard2014mqtt}]
+    MQTT is a Client Server publish/subscribe messaging transport protocol. [...]These characteristics make it ideal for use in many situations, including constrained environments such as for communication in Machine to Machine (M2M) and Internet of Things (IoT) [...].
+
+    The protocol runs over TCP/IP [...]. Its features include:
+
+    \begin{itemize}
+        \item Use of the publish/subscribe message pattern which provides one-to-many message distribution and decoupling of applications.
+        \item A messaging transport that is agnostic to the content of the payload.
+        \item A small transport overhead and protocol exchanges minimized to reduce network traffic.
+        \item A mechanism to notify interested parties when an abnormal disconnection occurs.
+    \end{itemize}
+\end{definition}
+
+Bei der Nutzung des MQTT-Protokolls werden zwei Bestandteile benötigt. Zum einen der \textbf{MQTT-Client}, welcher auf den Endgeräten genutzt wird und eine Kommunikation mit dem \textbf{MQTT-Broker} aufbaut.\\ Kernaufgabe des Brokers ist es dabei, die verschiedenen Topics inklusive den zugehörigen Subscribern und Zustellungsvorgaben zu verwalten. Um eine möglichst hohe Ausfallsicherheit zu gewährleisten können mehrere Broker bereitgestellt werden. Mithilfe entsprechender Kommunikation ist es möglich, im Falle eines Ausfalls auf andere Broker auszuweichen, ohne einen Verbindungs- oder Kommunikationsverlaust zu erleiden.
+
+\subsection{AMQP}
+\subsection{HTTP}
+\subsection{Websockets}
+\subsection{LoRaWAN}
+\subsection{Anforderungen an ein internes Kommunikationsmittel}
 
 \begin{enumerate}
     \item Architekturkonzept
     \begin{itemize}
-        \item Wieso Device-Registry? Anwendung, Anforderungen, Nutzen, etc.
-        \begin{itemize}
-            \item Eine Device Registry muss verschiedene Aufgaben erfüllen
-            \item Muss Devices registrieren/verwalten können
-            \item Verbindungen der Devices müssen abrufbar sein
-            \item Authentifizierung/-sinformationen der Devices muss gespeichert werden
-            \item bei generischer Nutzung $\rightarrow$ Scoping via namespace/tenant wichtig und muss dem device zugenordnet werden können
-        \end{itemize}
-        \item Authentifizierung, DaaS(Device as a Service), massenhafte Authentifizierung
-        \begin{itemize}
-            \item Was für verscheidene Methoden gibt es?
-            \item Welche werden verwendet?
-        \end{itemize}
+        % \item Wieso Device-Registry? Anwendung, Anforderungen, Nutzen, etc.
+        % \begin{itemize}
+        %     \item Eine Device Registry muss verschiedene Aufgaben erfüllen
+        %     \item Muss Devices registrieren/verwalten können
+        %     \item Verbindungen der Devices müssen abrufbar sein
+        %     \item Authentifizierung/-sinformationen der Devices muss gespeichert werden
+        %     \item bei generischer Nutzung $\rightarrow$ Scoping via namespace/tenant wichtig und muss dem device zugenordnet werden können
+        % \end{itemize}
+        % \item Authentifizierung, DaaS(Device as a Service), massenhafte Authentifizierung
+        % \begin{itemize}
+        %     \item Was für verscheidene Methoden gibt es?
+        %     \item Welche werden verwendet?
+        % \end{itemize}
         \item Common Schnittstellenformate, welche sind im Umlauf wie können sie zusammengeführt werden, sodass alle obigen Anforderungen noch laufen und erfüllt sind?
         \begin{itemize}
             \item Ein wenig die funktionalität und Idee hinter Eclipse Hono erklären. Dabei kurz die Grundlagen jedes Formats erklären
