@@ -4,7 +4,7 @@ Im folgenden Kapitel soll das Problem, welches bei der automatischen Erzeugung d
 
 \section{Die automatische Erzeugung digitaler Zwillinge}
 
-Das automatische Erzeugen digitaler Zwillinge stellt nur ein Teilziel in einem größeren Prozess dar, dessen Ziel es ist, mittels eines digitalen Zwilling eine dauerhaft ansprechbare Schnittstelle zu einen Endgerät zu haben. Bei dem Teilprozess der Erzeugung digitaler Zwillinge spielen zwei Komponenten eine wesentliche Rolle. In \vref{fig:high_level} sind die Kernkomponenten sowie deren Zusammenhang aufgezeigt. Im speziellen spielen dabei die Device Registry und der Digital Twin Provider eine Rolle.
+Das automatische Erzeugen digitaler Zwillinge stellt nur ein Teilziel in einem größeren Prozess dar, dessen Ziel es ist, mittels eines digitalen Zwilling eine dauerhaft ansprechbare Schnittstelle zu einen Endgerät zu haben. Bei dem Teilprozess der Erzeugung digitaler Zwillinge spielen zwei Komponenten eine wesentliche Rolle. In Abbildung \vref{fig:high_level} sind die Kernkomponenten sowie deren Zusammenhang aufgezeigt. Im speziellen spielen dabei die Device Registry und der Digital Twin Provider eine Rolle.
 
 Da es sich bei diesen beiden Bestandteilen um voneinander unabhänige Anwendungen handelt, muss eine dauerhafte Verbindung sichergestellt werden. Außerdem müssen Geräte, die innerhalb der Device Registry liegen auch über den Digital Twin Provider bereitgestellt werden können. Für beide Komponenten gibt es spezifische Heruasforderungen, welche im folgenden näher betrachtet werden sollen.
 
@@ -30,20 +30,57 @@ Kernaufgabe der Device Registry ist es, wie in \vref{def:device_registry} noch e
         \draw [arrow] (app) -- node[anchor=south, align=left, text width=4cm]{consumes information about digital twins} (dts);
         \draw [thick, dashed] (app) -- (device);
     \end{tikzpicture}
-    \caption{Grobübersicht über die vorgeschlagene Architektur und deren Zusammenspiel}
+    \caption{Grobübersicht über die vorgeschlagene Architektur und deren Zusammenspiel\\ Quelle: Eigene Darstellung}
     \label{fig:high_level}
 \end{figure}
 
 Des weiteren gilt es die Herausforderung der Authentifizierung eines Endgerätes über die Device Registry zu lösen. Vor allem das Problem der Zugangsdaten muss gelöst werden, sodass ein problemloser Einsatz und Austausch von Endgeräten möglich ist, ohne administrativen Aufwand betrieben zu müssen. Dies hat auch Auswirkungen auf die wirtschaftlichen Auswirkungen, da ein geringer Wartungsaufwand auch geringere Kosten mit sich bringt. Ziel der in der Architektur verwendeten Device Registry sollte es dementsprechend sein, eine einfache, wartungsarme Authentifizierungsmethode bereitzustellen.
 
-Außerdem muss eine Device Registry generisch einsetzbar sein. Die Praktikabiliät einer Lösung, welche nur Geräte eines Anwenders unterstützt und keine Möglichkeit bereitstellt, eine Sichtbarkeitseinstellung oder Authentisierung gewisser Geräte für bestimmte Anwender vorzunehmen würde den Einsatz einschränken. Auch hier würde die Realisierung von mehr Anwendungsfällen zu höheren Kosten führen, da eventuell mehrere Serverressourcen bereitgestellt werden müssen.
+Außerdem muss eine Device Registry generisch einsetzbar sein. Die Praktikabiliät einer Lösung, welche nur Geräte eines Anwenders unterstützt und keine Möglichkeit bereitstellt, eine Sichtbarkeitseinstellung oder Authentisierung gewisser Geräte für bestimmte Anwender vorzunehmen würde den Einsatz einschränken. Auch hier würde eine Realisierung von mehr Anwendungsfällen zu höheren Kosten führen, da eventuell mehrere Serverressourcen bereitgestellt werden müssen.
 
+\subsection*{Anforderungen an eine Device Registry}
 
+Anhand obiger Analyse lassen sich mehrere Anforderungen an eine Device Registry ableiten:
+
+\begin{enumerate}
+    \item Bereitstellung einer einfachen Authentifizierungsmethode zwischen Endgerät und Device Registry
+    \item Unterstützung möglichst vieler Kommunikationsprotokoll mit einer Möglichkeit zur Erweiterung um zusätzliche Protokolle
+    \item Möglichkeit eines Einsatzes für mehrere Anwender innerhalb einer Device Registry. Eine Sichtbarkeitseinstellung muss möglich sein.
+    \item Verarbeitung und Bereitstellung der Telemetriedaten der Endgeräte.
+\end{enumerate}
+
+Die Einführung einer Device Registry mit obigen Kriterien führt auch dazu, die Modularität zu erhöhen, da keine Funktionalität einer speziellen Device Registry vorausgesetzt wird. So kann auch im Falle eines Austauschs der Device Registry oder der Einführung einer Eigenentwicklung ohne Probleme migriert werden, sofern alle Kriterien erfüllt sind. Diese Modularität gilt es in allen Bereichen der Architektur zu erreichen.
+
+\subsection{Digital Twin Provider}
+
+Die zweite wichtige Komponente im Teilprozess der automatischen Erstellung digitaler Zwillinge stellt der \textbf{Digital Twin Provider} dar. Seine Rolle im Gesamtprozess wird noch einmal in Abbildung \vref{fig:high_level} aufgezeigt.
+
+Die Kernaufgabe eines \ac{DT} Providers stellt das zur Verfügungstellen der \textit{eigentlichen} digitalen Zwillinge dar. Das bedeutet ihm fällt die Verwaltung der Verbindung zwischen der in der Device Registry vorhandenen Geräte und dem \ac{DT} zu. Er muss sicherstellen, dass jeder digitaler Zwilling immer ansprechbar ist und verwertbare Informationen liefert. Zusätzlich fällt ihm die Aufgabe zu, sicherzustellen, dass \ac{DT}s eine Struktur haben, sodass eine Anfrage konsitente Ergebnisse liefert.
+
+Zusätzlich ist es wichtig sogenannte \textit{virtuelle Eigenschaften} auf Basis vorhandener Daten erstellen zu können. Diese Eigenschaften können mithilfe von Funktionen berechnet werden. Daraus folgt eine Anforderung an den Digital Twin Provider: Dieser muss die Möglichkeit bereitstellen, Funktionen innerhalb einer abgesicherten Umgebung zur Berechnung anlegen zu können.
+
+Gleichzeitig gilt eine Anforderung, welche bereits für die Device Registry von Relevanz war. Es muss die Möglichkeit geben, den \ac{DT} Provider durch mehr als einen Anwender nutzen zu können. Dafür müssen Mechanismen bereitgestellt werden, welche im Idealfall mit denen der Device Registry übereinstimmen.
+
+Der Digital Twin Provider muss außerdem ein umfangreiches \enquote{Policy} Modul integrieren, um Zugriffsregeln bis auf Eigenschaftenebene eines \ac{DT}s bestimmen zu können. Dies ist von immenser Bedeutung, um ein durchgängiges Authentifizierungs- und Authorisierungskonzept aufrechtezuerhalten und externe Business Applications nach dem \enquote{least visibility} Prinzip bedienen zu können, auch um schädliche Zugriffe zu vermeiden.
+
+Business Applikationen verwenden unterschiedlichste Kommunikationsprotokolle, um Daten zu erhalten. Um sicherzustellen, dass auch hier eine Vielzahl von Applikationen bedient werden kann, müssen wie in der Device Registry möglichst viele Protokolle unterstützt werden und nach Möglichkeit erweiterbar sein. Die bedeutensten Formate für Business Applikationen sind:
 
 \begin{itemize}
-    \item --> Es muss eine ordentliche DR geben, damit es keine Probleme gibt
-    \item die Einführung einer DR führt auch dazu, dass alles Modularer aufgebaut werden kann und die anforderungen realisiert werden können.
-    \item Separat kann ein DT-Hub bereitgestellt werden. Durch klar definierte Kommunikationsprotokolle mit externen Schnittstellen kann mithilfe der DR eine Kommunikation zwischen DR und DTs aufgebaut werden, sodass die Bereitstellung von Telemetriedaten einfach ist.
+    \item \texttt{HTTP/1.x} und \texttt{HTTP/2.0}\footnotetext{HTTP 2 ermöglicht neben dem parallelen Übertragen von Daten auch das Streamen von Datenpaketen. HTTP 1 dagegen setzt nur ein klassisches Request-Response Pattern um.}
+    \item Websockets
+\end{itemize}
+
+Diese Protokolle ermöglichen den einfachen Transfer von Telemetriedaten, sowohl auf Anfrage mittels \texttt{HTTP/1.x} oder auch kontinuierlich via Websockets oder \texttt{HTTP/2.0}.
+
+Wichtig ist ebenfalls, das erzwingen einer konsitenten Struktur der digitalen Zwillinge. Dabei gilt es sicherzustellen, dass sowohl eine Struktur für die statischen Informationen (z.B. Modellnummer, Seriennummer, Standort, etc.) als auch die dynamischen Informationen (z.B. physische und virtuelle Sensoren) vorhanden ist. Dabei stellt es \textbf{nicht} die Aufgabe des \ac{DT} Providers dar, eine Verwaltungsstrutkur bereitzustellen, sondern nur auf Basis gegebener Strukturinformationen Validierungen durchzuführen und die Struktur zu erzwingen.
+
+\subsection{Problemstellung}
+
+Nun da die für das Problem relevanten Komponenten einmal näher beleuchtet wurden, sowie deren grundlegenden Fähigkeiten beschrieben wurden, kann näher auf die Problematik eingegangen werden, zu welcher diese Arbeit eine Löung bereitstellen soll. 
+
+Die Device Registry stellt ein umfangreiches Verwaltungssystem für die physischen Geräte bereit und ist mit Schnittstellen ausgestattet, welche von anderen Applikationen genutzt werden können. Eine dieser Applikationen ist der Digital Twin Provider, der Informationen zu Geräten aus der Registry nutzen kann, um digitale Zwillinge zu konstruieren und bereitzustellen. Ebenfalls können die \ac{DT}s an dieser Stelle verwaltet werden. Allerdings können digitale Zwilling auch aufgrund der Anforderung einer festen Struktur \textbf{nicht} automatisch mit dem Senden der ersten Telemetriedaten nicht erstellt werden. Zusätzlich dazu stellt die Anforderung der genauen Definition einer Policy ein Problem bei der automatischen Erzeugung dar.
+
+\begin{itemize}
     \item Herausforderung stellt das automatische Erstellen von DTs dar, dabei müssen verschiedene (Auth, Namespace, \textbf{Struktur}) Aspekte beachtet werden
     \item Frage: Wie kann ein automatisierter Prozess aussehen, der das Problem löst?
     \item Antwort: Das Bild und ein extra Connector
@@ -61,5 +98,4 @@ Außerdem muss eine Device Registry generisch einsetzbar sein. Die Praktikabili�
     \item DTs werden \enquote{manuell} erstellt.
     \item Sensoren haben ein fest definiertes Sensorenset; der DT ist darauf begrenzt $\rightarrow$ muss erweitert werden
     \item Mehr Automatisierung zur Erstellung von DTs unabhängig des verwendeten Schnittstellenformates. Viele verschiedene Austauschformate bringen eine erhebliche Last auf den DT-Provider
-    \item 
 \end{itemize}
