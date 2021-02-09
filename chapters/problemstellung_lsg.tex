@@ -4,6 +4,51 @@ Im folgenden Kapitel soll das Problem, welches bei der automatischen Erzeugung d
 
 \section{Die automatische Erzeugung digitaler Zwillinge}
 
+Das automatische Erzeugen digitaler Zwillinge stellt nur ein Teilziel in einem größeren Prozess dar, dessen Ziel es ist, mittels eines digitalen Zwilling eine dauerhaft ansprechbare Schnittstelle zu einen Endgerät zu haben. Bei dem Teilprozess der Erzeugung digitaler Zwillinge spielen zwei Komponenten eine wesentliche Rolle. In \vref{fig:high_level} sind die Kernkomponenten sowie deren Zusammenhang aufgezeigt. Im speziellen spielen dabei die Device Registry und der Digital Twin Provider eine Rolle.
+
+Da es sich bei diesen beiden Bestandteilen um voneinander unabhänige Anwendungen handelt, muss eine dauerhafte Verbindung sichergestellt werden. Außerdem müssen Geräte, die innerhalb der Device Registry liegen auch über den Digital Twin Provider bereitgestellt werden können. Für beide Komponenten gibt es spezifische Heruasforderungen, welche im folgenden näher betrachtet werden sollen.
+
+\subsection{Device Registry}
+
+Kernaufgabe der Device Registry ist es, wie in \vref{def:device_registry} noch einmal genauer beleuchtet, alle relevanten Endgeräte verwalten zu können. Um dieses Ziel erreichen zu können muss sichergestellt werden, dass die Vielzahl der im \ac{IoT} üblichen Kommunikationsprotokolle unterstützt wird. Würden nicht alle wichtigen Protokolle unterstützt werden, so wäre die Einsatzfähigkeit der Anwendung in Frage zu stellen. Zu den wichtigsten Protokollen gehören unter anderem:
+\begin{itemize}
+    \item MQTT
+    \item AMQP
+    \item HTTP/WS, etc.
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node distance=4cm]
+        \node (device) [io] {Endgerät};
+        \node (dr) [process, right of=device, xshift=6cm] {Device Registry};
+        \node (dts) [process, below of=dr] {Digital Twin Provider};
+        \node (app) [startstop, below of=device] {Business Application};
+
+        \draw [arrow] (device) -- node[anchor=south, align=left, text width=4cm] {sends telemetry data and authenticates} (dr);
+        \draw [arrow] (dr) -- node[anchor=west, align=left, text width=2.5cm]{establishes connection and forwards telemetry data} (dts);
+        \draw [arrow] (app) -- node[anchor=south, align=left, text width=4cm]{consumes information about digital twins} (dts);
+        \draw [thick, dashed] (app) -- (device);
+    \end{tikzpicture}
+    \caption{Grobübersicht über die vorgeschlagene Architektur und deren Zusammenspiel}
+    \label{fig:high_level}
+\end{figure}
+
+Des weiteren gilt es die Herausforderung der Authentifizierung eines Endgerätes über die Device Registry zu lösen. Vor allem das Problem der Zugangsdaten muss gelöst werden, sodass ein problemloser Einsatz und Austausch von Endgeräten möglich ist, ohne administrativen Aufwand betrieben zu müssen. Dies hat auch Auswirkungen auf die wirtschaftlichen Auswirkungen, da ein geringer Wartungsaufwand auch geringere Kosten mit sich bringt. Ziel der in der Architektur verwendeten Device Registry sollte es dementsprechend sein, eine einfache, wartungsarme Authentifizierungsmethode bereitzustellen.
+
+Außerdem muss eine Device Registry generisch einsetzbar sein. Die Praktikabiliät einer Lösung, welche nur Geräte eines Anwenders unterstützt und keine Möglichkeit bereitstellt, eine Sichtbarkeitseinstellung oder Authentisierung gewisser Geräte für bestimmte Anwender vorzunehmen würde den Einsatz einschränken. Auch hier würde die Realisierung von mehr Anwendungsfällen zu höheren Kosten führen, da eventuell mehrere Serverressourcen bereitgestellt werden müssen.
+
+
+
+\begin{itemize}
+    \item --> Es muss eine ordentliche DR geben, damit es keine Probleme gibt
+    \item die Einführung einer DR führt auch dazu, dass alles Modularer aufgebaut werden kann und die anforderungen realisiert werden können.
+    \item Separat kann ein DT-Hub bereitgestellt werden. Durch klar definierte Kommunikationsprotokolle mit externen Schnittstellen kann mithilfe der DR eine Kommunikation zwischen DR und DTs aufgebaut werden, sodass die Bereitstellung von Telemetriedaten einfach ist.
+    \item Herausforderung stellt das automatische Erstellen von DTs dar, dabei müssen verschiedene (Auth, Namespace, \textbf{Struktur}) Aspekte beachtet werden
+    \item Frage: Wie kann ein automatisierter Prozess aussehen, der das Problem löst?
+    \item Antwort: Das Bild und ein extra Connector
+    \item Aktuell in Golang geschrieben, besser wäre allerdings eine Integration in das IoT Projekt von Eclipse
+\end{itemize}
 
 \begin{itemize}
     \item Trotz vieler verschiedener Anbieter von DTs werden diese nicht automatisch erzeugt, oder haben nicht den vollen funktionsumfang eines DT.
