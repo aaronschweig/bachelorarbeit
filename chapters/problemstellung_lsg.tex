@@ -92,9 +92,36 @@ Dies führt zu folgendem akkumulierten Problem.
     \end{itemize}
 \end{problem}
 
-Der im folgenden beschriebene Lösungsansatz versucht eine solche Applikation bereitzustellen und zeigt sowohl die Vor- als auch die Nachteile dieser Lösung auf.
+Der im Folgenden beschriebene Lösungsansatz versucht eine solche Applikation bereitzustellen und zeigt sowohl die Vor- als auch die Nachteile dieser Lösung auf.
 
 \section{Lösungsansatz}
 
+Es wird ein dritte Komponente hinzugefügt, welche die oben beschriebenen Aufgaben übernimmt. Dabei handelt es sich um einen autarken Service, welcher separat von den anderen Komponenten bereitgestellt werden kann. Diese Komponente lässt sich foglendermaßen in die Gesamtarchitektur integrieren:
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=4cm and 4cm]
+        \node (device) [io] {Endgerät};
+        \node (dr) [process, right of=device, xshift=2cm] {Device Registry};
+        \node (dts) [process, below of=dr] {Digital Twin Provider};
+        \node (connector) [process, fill=green!30, right of=dr, yshift=-1.75cm] {Connector};
+        \node (app) [startstop, below of=device] {Business Application};
+    
+        \draw [arrow] (device) -- (dr);
+        \draw [arrow] (dr) -- (dts);
+        \draw [arrow] (app) -- (dts);
+
+        \draw [thick, dashed, color=red] (connector) -- (dr);
+        \draw [thick, dashed, color=red] (connector) -- (dts);
+        \draw [dashed] (connector) -| (device);
+    \end{tikzpicture}
+    \caption{Übersicht über die Integration des Connectors in die Gesamtarchitektur\\Quelle: Eigene Darstellung}
+    \label{fig:high_level_conn}
+\end{figure}
+
+In der Abbildung \vref{fig:high_level_conn} ist die Integration des Connectors in die Architektur beschrieben. Es lässt sich erkennen, dass dieser \textbf{keine hohe Kopplung} in seiner Integration mit sich bringt. Entsprechend kann dieser Service ohne Probleme zusätzlich über einen Server bereitgestellt werden. \\
+Es lässt sich auch erkennen, dass unter Umständen eine direkte Verbindung zum Endgerät für einen kurzen Zeitraum benötigt wird. Diese ist allerdings als Optional anzusehen, da sie nur in spezifischen Anwendungsszenarien von Bedeutung ist.
+
+Diese Komponente benötigt zum operieren wie in der Abbildung beschreiben Zugriffe auf die Device Registry und den Digital Twin Provider. Die Aufgabe die mithilfe des Connectors erledigt wird, besteht darin, im Falle eines neu registrierten Gerätes einen korrespondieren \ac{DT} zu erstellen und diesen mit äquivaltenter Sichtbarkeit auszustatten. Zusätzlich können Standardpolicies vergeben werden, die mitunter auch entsprechend der Sichtbarkeit individuell angepasst werden können. Ebenfalls fällt dem Connector die Aufgabe zu, benötigte Strukturinformationen während des Erstellens bereitzustellen. Dieser Vorgang kann sich von Anwendung zu Anwendung unterscheiden und lässt deshalb die genaue Umsetzung offen.\\
+Es kann eine statische Vorlage hinterlegt werden, welche dann entsprechender Kriterien angewendet werden, oder es kann eine externe Registry genutzt werden, welche referenziert werden kann.
 
