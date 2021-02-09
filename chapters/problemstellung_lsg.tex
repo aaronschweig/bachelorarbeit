@@ -80,22 +80,21 @@ Nun da die für das Problem relevanten Komponenten einmal näher beleuchtet wurd
 
 Die Device Registry stellt ein umfangreiches Verwaltungssystem für die physischen Geräte bereit und ist mit Schnittstellen ausgestattet, welche von anderen Applikationen genutzt werden können. Eine dieser Applikationen ist der Digital Twin Provider, der Informationen zu Geräten aus der Registry nutzen kann, um digitale Zwillinge zu konstruieren und bereitzustellen. Ebenfalls können die \ac{DT}s an dieser Stelle verwaltet werden. Allerdings können digitale Zwilling auch aufgrund der Anforderung einer festen Struktur \textbf{nicht} automatisch mit dem Senden der ersten Telemetriedaten nicht erstellt werden. Zusätzlich dazu stellt die Anforderung der genauen Definition einer Policy ein Problem bei der automatischen Erzeugung dar.
 
-\begin{itemize}
-    \item Herausforderung stellt das automatische Erstellen von DTs dar, dabei müssen verschiedene (Auth, Namespace, \textbf{Struktur}) Aspekte beachtet werden
-    \item Frage: Wie kann ein automatisierter Prozess aussehen, der das Problem löst?
-    \item Antwort: Das Bild und ein extra Connector
-    \item Aktuell in Golang geschrieben, besser wäre allerdings eine Integration in das IoT Projekt von Eclipse
-\end{itemize}
+Dies führt zu folgendem akkumulierten Problem.
 
-\begin{itemize}
-    \item Trotz vieler verschiedener Anbieter von DTs werden diese nicht automatisch erzeugt, oder haben nicht den vollen funktionsumfang eines DT.
-    \item Der Weg sollte direkt von einem selbstidentifizierenden Sensor stammen, der dann direkt in dem korrespondierenden Framework von DTs einen virtuellen Part bekommt.
-\end{itemize}
+\begin{problem}[Automatische Erzeugung digitaler Zwillinge]
+    Durch die Modularität der Gesamtarchitektur sind die Device Registry und der Digital Twin Provider zwei voneinander getrennt operierende Systeme. Jedes dieser Systeme nutzt eigene Persitenzmechanismen, da unterschiedliche Anforderungen an die jewiligen Systeme bestehen. Deshalb gibt es keinen geteilten Speicher, der einen integrierten automatischen Austausch der benötigten Informationen ermöglicht. Gleichzeitig fehlt eine Instanz, die Strukturinformationen zu digitalen Zwillingen bereitstellen kann. Die Integration dieser drei Komponenten muss automatisiert werden. Es wird ein System benötigt, welches die folgenden Kriterien erfüllt:
 
-\section{Ist Zustand}
+    \begin{itemize}
+        \item Erkennen eines neu registrierten Gerätes innerhalb der Device Registry.
+        \item Aufbauen einer stabilen Verbindung zum Transfer der Telemetriedaten zwschen Device Registry und Digital Twin Provider.
+        \item Erstellen eines digitalen Zwillings mit Policy- und Strukturinformationen.
+    \end{itemize}
+\end{problem}
 
-\begin{itemize}
-    \item DTs werden \enquote{manuell} erstellt.
-    \item Sensoren haben ein fest definiertes Sensorenset; der DT ist darauf begrenzt $\rightarrow$ muss erweitert werden
-    \item Mehr Automatisierung zur Erstellung von DTs unabhängig des verwendeten Schnittstellenformates. Viele verschiedene Austauschformate bringen eine erhebliche Last auf den DT-Provider
-\end{itemize}
+Der im folgenden beschriebene Lösungsansatz versucht eine solche Applikation bereitzustellen und zeigt sowohl die Vor- als auch die Nachteile dieser Lösung auf.
+
+\section{Lösungsansatz}
+
+
+

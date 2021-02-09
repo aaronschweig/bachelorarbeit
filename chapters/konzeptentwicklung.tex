@@ -254,10 +254,40 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
             \item welche vorteile gibt es, ein solches ding zu haben
         \end{itemize}
     \end{itemize}
-    \item Softwarekonzept
-    \begin{itemize}
-        \item Müsste nochmal genau abklären, was damit gemeint ist
-    \end{itemize}
 \end{enumerate}
 
 \section{Wie kann das alles genutzt werden? -- ADAPTER}
+
+\section{Digital Twin Provider}
+
+\begin{itemize}
+    \item Bild über den internen Aufbau von Ditto
+    \item Genauer auf problematische Funktionen eingehen, die in den Anforderungen beschrieben wurden
+    \item Überleiteung auf Vorto
+    \begin{itemize}
+        \item Nutzen von Vorto und beispielhafter Aufbau
+        \item Integration von Vorto in Ditto
+    \end{itemize}
+    \item Zusammenführen der Hono-Eclipse Kombination mit Vorto
+    \item Wo greift alles gut ineinander
+    \item Tatsächliche Überleitung auf Softwareumsetzung
+\end{itemize}
+
+\large{Softwarekonzept}
+\normalsize
+\begin{itemize}
+    \item Hono als DR
+    \item Ditto als DT Provider
+    \item Vorto als Strukturrepository
+    \item \enquote{Am Beispiel eines Sensors mit LoRaWAN und TTN}
+    \item Beschreiben der Schritte innerhalb der Umsetzung (Go-App)
+    \item 
+\end{itemize}
+
+\large{Deployment}
+\normalsize
+\begin{itemize}
+    \item Deplomyent via Container (Docker)
+    \item verschiedene Methoden der Containerorchestrierung (docker-compose, kubernetes)
+    \item Hinzufügen von Hard- und Softwaremonitoring
+\end{itemize}
