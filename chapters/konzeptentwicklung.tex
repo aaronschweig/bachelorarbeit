@@ -181,7 +181,7 @@ Im Gegensatz zu der unidirektionalen Kommunikation steht bei der bidirektionalen
     \caption[Bidirektionale Kommunikation]{Bidirektionale Kommunikation zwischen Endgerät und Device Registry.\\Quelle: Eigene Darstellung}
 \end{figure}
 
-Eine Besonderheit der bidirektionalen Kommunikation mittels \ac{MQTT} stellt das fehlende Request-Response Pattern dar. Bei anderen Protokollen (,wie z.B. HTTP) ist in das Protokoll ein Mechanismus eingebaut, um auf die Anfrage eines Clients eine Antwort an nur diesen Client zurückzugeben. Dieses Konzept wurde innerhalb der MQTT Spezifikation nicht umgesetzt. Stattdessen kann dort mittels klar definierten Topic Strukturen ein Request-Reponse Pattern integriert werden.
+Eine Besonderheit der bidirektionalen Kommunikation mittels \ac{MQTT} stellt das fehlende Request-Response Pattern dar. Bei anderen Protokollen (wie z.B. HTTP) ist in das Protokoll ein Mechanismus eingebaut, um auf die Anfrage eines Clients eine Antwort an nur diesen Client zurückzugeben. Dieses Konzept wurde innerhalb der MQTT Spezifikation nicht umgesetzt. Stattdessen kann dort mittels klar definierten Topic Strukturen ein Request-Reponse Pattern integriert werden.
 \pagebreak
 \begin{example}[Request-Response innerhalb von MQTT] Eine examplarische Methode zur Integration eines Request-Response Pattern kann folgender Abbildung entnommen werden. Dabei ist zu erkennen, dass das Zeil mithilfe einer bestimmten Topicstruktur erreicht wird. Diese Topicstrukturen können innerhalb von MQTT nicht erzwungen werden, sodass nicht sichergestellt ist, dass dieses Konzept zuverlässig funktionert.
 
@@ -209,14 +209,14 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
     The \ac{AMQP} is an open internet protocol for business messaging. It defines a binary wire-level protocol that allows for the reliable exchange of business messages between two parties. AMQP has a layered architecture and the specification is organized as a set of parts that reflects that architecture. Part 1 defines the AMQP type system and encoding. Part 2 defines the AMQP transport layer, an efficient, binary, peer-to-peer protocol for transporting messages between two processes over a network. Part 3 defines the AMQP message format, with a concrete encoding. Part 4 defines how interactions can be grouped within atomic transactions. Part 5 defines the AMQP security layers.
 \end{definition}
 
-Ähnlich wie bei \ac{MQTT} gibt es innerhalb von \ac{AMQP} mehrere Aktuere. Es gibt einen sogenannten \textit{Produzenten} der Nachricht, welche die zu übertragenden Informationen spezifiziert. Die Nachricht stellt dabei das Kernelement der gesamten Kommunikation dar. Diese Nachricht wird dann in einem Message Broker verarbeitet. Die Aufgaben des Message Brokers ist dabei äquivalent zu dem \ac{MQTT} Protokoll. Ein \textit{Konsument} kann sein Interesse an bestimmten Nachrichten bekunden, indem er auf sogenannte \textit{Exchanges} subscribed. Der Konsument hat somit die Möglichkeit Nachrichten, die innerhalb dieses Themas publiziert wurden anzufordern und zu verarbeiten.
+Ähnlich wie bei \ac{MQTT} gibt es innerhalb von \ac{AMQP} mehrere Akteure. Es gibt einen sogenannten \textit{Produzenten} der Nachricht, welche die zu übertragenden Informationen spezifiziert. Die Nachricht stellt dabei das Kernelement der gesamten Kommunikation dar. Diese Nachricht wird dann in einem Message Broker verarbeitet. Die Aufgaben des Message Brokers ist dabei äquivalent zu dem \ac{MQTT} Protokoll. Ein \textit{Konsument} kann sein Interesse an bestimmten Nachrichten bekunden, indem er auf sogenannte \textit{Exchanges} subscribed. Der Konsument hat somit die Möglichkeit Nachrichten, die innerhalb dieses Themas publiziert wurden anzufordern und zu verarbeiten.
 
 \ac{AMQP} unterscheidet sich allerdigns in der Funktionsweise des Brokers von \ac{MQTT}. Innerhalb des Brokers gibt es drei Kernbestandteile:
 \begin{enumerate}
     \item Die \textbf{Exchange}:\\
     Die Exchange definiert die Art der Nachrichtenübermittlung, im speziellen, ob es sich dabei um einen \textbf{Direct Exchange}, oder einen \textbf{Fanout Exchange} handelt. Der Direct Exchange stellt Nachrichten an einen einzigen Empfänger durch, wohingegen der Fanout Exchange die Nachricht an alle interessierten Queues vervielfältigt. Es gibt also zwei verschiedene Arten der Kommunikation mit einem oder wenigen Empfängern. Im Gegesnatz zu den obigen Methoden steht der sog. \textbf{Topic Exchange}. Der Topic Exchange ermöglicht es Platzhalter zu verwenden, um so nicht auf alle spezifischen Routen subscriben zu müssen.
     \item Die \textbf{Routes}:\\
-    Routen stellen die Verbindung zwischen der Exchange und er Queue dar. Sie leiten Nachrichten, welche in einer Exchange zur Verfügung gestellt werden zu den interessierten Queues weiter. Entsprechend der gewählten Art der Exchange werden entsprechende Routing Regeln angelegt. Sie dienen daher als reine Nachrichtenübermittler
+    Routen stellen die Verbindung zwischen der Exchange und er Queue dar. Sie leiten Nachrichten, welche in einer Exchange zur Verfügung gestellt werden, zu den interessierten Queues weiter. Entsprechend der gewählten Art der Exchange werden entsprechende Routing Regeln angelegt. Sie dienen daher als reine Nachrichtenübermittler
     \item Die \textbf{Queues}:\\
     Queues können entweder von dem Broker oder von einem Client mit einem Identifikator versehen werden. Queues stellen einen physischen Speicher dar, welcher als Speicher für die Nachrichten dient, die mittels einer Exchange publiziert werden. Clients interagieren direkt mit der Queue, um Nachrichten zu empfangen.
 \end{enumerate}
@@ -247,8 +247,8 @@ Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank de
 \subsection{Anforderungen an ein internes Kommunikationsmittel}
 
 \begin{itemize}
-    \item Anfragestruktur mit pufferlösung ist wichtig, damit bei vielen Anfrage keine Verloren geht.
-    \item HTTP fäällt weg, da nicht pufferbar und es iwann einen timeout gibt, wenn die anfrage nicht beantwortet wird. Websockets wären eine alternative, dabei würde aber die Last massiv auf dem/den Servern liegen, was zu Problemen führen kann. eleganter wäre eine Lösung mittels eines Message Brokers. Welche kommen in Frage?
+    \item Anfragestruktur mit Pufferlösung ist wichtig, damit bei vielen Anfrage keine Verloren geht.
+    \item HTTP fällt weg, da nicht pufferbar und es iwann einen timeout gibt, wenn die anfrage nicht beantwortet wird. Websockets wären eine alternative, dabei würde aber die Last massiv auf dem/den Servern liegen, was zu Problemen führen kann. eleganter wäre eine Lösung mittels eines Message Brokers. Welche kommen in Frage?
     \item MQTT sehr bekannt, oft eingesetzt, hat aber keinen Support for Req-Res pattern, was in einem Microserviceumfeld schwierigkeiten bereitet.
     \item AMQP bietet sich an, da schnell (binary Protocol), unterstützt Req-Res Pattern und ist Brokerbasiert, sodass anfragen gepuffert werden und asynchron abgearbeitet werden können.
 \end{itemize}
@@ -279,11 +279,40 @@ Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank de
 
 \section{Digital Twin Provider}
 
+In Folgendem Abschnitt soll der genaue Aufbau eines Digital Twin Providers beschrieben werden. Dabei wird im genaueren Betrachtet wie die Anforderungen aus \vref{sec:dtp} umgesetzt werden können.
+
 \begin{figure}
     \centering
-    \includegraphics[width=1.0\linewidth]{img/ditto_arch.png}
+    \includegraphics[width=0.8\linewidth]{img/ditto_arch.png}
     \caption[Aufbau eines Digital Twin Providers]{Aufbau eines Digital Twin Providers am Beispiel von Eclipse Ditto.\\Quelle:}
+    \label{fig:ditto_arch}
 \end{figure}
+
+\subsection*{Integration von Strukturinformationen}
+Eine der wichtigsten Funktionen des Digital Twin Providers stellt die strukturierte Bereitstellung der gesammelten Telemetriedaten dar. Da digitale Zwillinge nicht zwingend dem zugrundeligenden physischen Sensor entsprechen, sondern auf beliebige Art und Weise erweitert werden können, sind Strukturinformationen von elementarer Bedeutung, um den Nutzen zu erhöhen. Die Integration dieser Informationen muss optional sein, da sonst Einstiegshürden geschaffen werden, welche die \enquote{time to market} einer zu entwickelnden Applikation negativ beeinflussen können. Daher bietet es sich an eine extra Komponente in der Gesamtarchitektur bereitzustellen, welche optional hinzugefügt und integriert werden kann.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node distance=4cm]
+        \node (device) [io] {Endgerät};
+        \node (dr) [process, right of=device, xshift=2cm] {Device Registry};
+        \node (dts) [process, below of=dr] {Digital Twin Provider};
+        \node (vorto) [process, right of=dts] {Strukturregistry};
+        \node (connector) [process, fill=green!30, right of=dr, yshift=-1.75cm] {Connector};
+        \node (app) [startstop, below of=device] {Business Application};
+    
+        \draw [arrow] (device) -- (dr);
+        \draw [arrow] (dr) -- (dts);
+        \draw [arrow] (app) -- (dts);
+    
+        \draw [thick, dashed, color=red] (connector) -- (dr);
+        \draw [thick, dashed, color=red] (connector) -- (dts);
+        \draw [dashed] (connector) -| (device);
+        \draw [dashed, thick] (vorto) -- (dts);
+    \end{tikzpicture}
+    \caption[Integration der Strukturregistry in die Gesamtarchitektur]{Integration der Strukturregistry in die Gesamtarchitektur.\\Quelle: Eigene Darstellung}
+\end{figure}
+
 
 
 \begin{itemize}
