@@ -1,6 +1,6 @@
 \chapter{Konzeptentwicklung}
 
-Ziel des Konzeptes ist es eine möglichst automatisierte Erstellung digitaler Zwillinge ohne manuelle Interaktion bereitzustellen. Dies bringt verschiedene Vorteile mit sich, vor allem aber, können so dynamisch neue Zwillinge für neue Geräte generiert werden. Dabei ist es auch die Aufgabe bereits bestehende Geräte, im Falle einer Netzwerkpartition wieder mit ihrem entsprechenden Zwilling zu verbinden.\\
+Ziel des Konzeptes ist es eine möglichst automatisierte Erstellung digitaler Zwillinge ohne manuelle Interaktion bereitzustellen. Dies bringt verschiedene Vorteile mit sich, vor allem aber, können so dynamisch neue Zwillinge für neue Geräte generiert werden. Dabei ist es auch die Aufgabe bereits bestehende Geräte, sich im Falle einer Netzwerkpartition wieder mit ihrem entsprechenden Zwilling zu verbinden.\\
 Dabei muss berücksichtigt werden, dass verschiedene Services bei dem Erstellen und dem Aufrechterhalten der Verbindung genutzt werden.
 
 Eine wichtige Komponente stellt dabei die \textbf{Device Registry} dar. IBM definiert die Funktion einer Device Registry folgendermaßen:
@@ -9,10 +9,10 @@ Eine wichtige Komponente stellt dabei die \textbf{Device Registry} dar. IBM defi
     \enquote{The Device Registry is the most important part of any IoT solution. With the registry, you can manage your device types and manage, maintain, and monitor the devices that you register.}\autocite{ibm_dr}\label{def:device_registry}
 \end{definition}
 
-Aus dieser Definition lassen sich mehrere wichtige Eigenschaften entnehmen. Zum einen stellt eine Device Registry einen zentralen Bestandteil dar. Dort liegt die Verwaltung der verscheidenen Geräte, welche alle entweder eigenständig oder miteinander kombiniert zur Erstellung digitaler Zwillinge genutzt werden können. Es geht auch hervor, dass die Art des Gerätes keine Rolle spielt - es können sogar verschiedene Typen verwaltet werden. Gleichzeitig dient es auch als zentrale Anlaufstelle, um die Authentizität von Geräten zu verifizieren. So muss eine Device Registry auch Mechanismen implementierne, der es ermöglicht tausende Geräte zu identifiezieren und zu verwalten.
+Aus dieser Definition lassen sich mehrere wichtige Eigenschaften entnehmen. Zum einen stellt eine Device Registry einen zentralen Bestandteil dar. Dort liegt die Verwaltung der verscheidenen Geräte, welche alle entweder eigenständig oder miteinander kombiniert zur Erstellung digitaler Zwillinge genutzt werden können. Es geht auch hervor, dass die Art des Gerätes keine Rolle spielt - es können sogar verschiedene Typen verwaltet werden. Gleichzeitig dient es auch als zentrale Anlaufstelle, um die Authentizität von Geräten zu verifizieren. So muss eine Device Registry auch Mechanismen implementieren, die es ermöglichen tausende Geräte zu identifiezieren und zu verwalten.
 
-Alle Bestandteile einer Device-Regisry lassen sich Abbildung \vref{fig:device_registry} erkennen. Von dieser Abbildung lässt sich auch eine exemplarischer Aufbau entnehmen, welche anderen Komponenten eine wichtige Rolle bei der Umsetzung einer Device Registry spielen. Für jeden Anwendungsfall eine eigene Device Registry aufzusetzen, Ressourcen für den Betrieb zu allokieren und zu warten gestaltet sich als unpraktisch. 
-Deswegen sind die Registry verschiedener Anbieter \footnotetext{Google IoT Core, IBM, Eclipse Hono} mit einem Namespace System ausgestattet, sodass mehrere Nutzer abgetrennt voneinander innerhalb derselben Registry verwendet werden können.
+Alle Bestandteile einer Device-Regisry lassen sich auf Abbildung \vref{fig:device_registry} erkennen. Für jeden Anwendungsfall eine eigene Device Registry aufzusetzen, Ressourcen für den Betrieb zu allokieren und zu warten gestaltet sich als unpraktisch. 
+Deswegen sind die Registries verschiedener Anbieter \footnotetext{Google IoT Core, IBM, Eclipse Hono} mit einem Namespace System ausgestattet, sodass mehrere Nutzer abgetrennt voneinander innerhalb derselben Registry verwendet werden können.
 
 \begin{figure}
     \centering
@@ -26,7 +26,7 @@ Inhärent bedeutet das, dass das Authentifizierungs- und Authorisierungssystem d
 \section{Authentifizierung und Authorisierung von IoT Geräten}
 \label{sec:auth}
 
-Die Authentifizeriung von Geräten im IoT Bereich stellt eine Herausforderung dar. So stellt es sich als sehr unpraktisch dar, für jedes Gerät eigene Zugangsdaten zu generieren und auf dem Gerät zu hinterlegen, damit es sich bei der Device Registry identifizieren kann. Auch stellt es ein Sicherheitsproblem dar, sollten sich Geräte eigenständig in der Device Registry registrieren können, ohne vorher Beweisen zu können, dass sie Zugriff auf einen bestimmten Namespace haben. \\
+Die Authentifizeriung von Geräten im IoT Bereich stellt eine Herausforderung dar. So ist es unpraktisch, für jedes Gerät eigene Zugangsdaten zu generieren und auf dem Gerät zu hinterlegen, damit es sich bei der Device Registry identifizieren kann. Auch birgt es ein Sicherheitsproblem, sollten sich Geräte eigenständig in der Device Registry registrieren können, ohne vorher Beweisen zu können, dass sie Zugriff auf einen bestimmten Namespace haben. \\
 Es gilt also eine Alternative zu finden, welche es ermöglicht Geräte im großen Stil mit Zugangsdaten auszustatten, welche allerdings nicht Geräteindividuell angepasst werden müssen.\\
 Um das manuelle Hinterlegen geräteindividueller Zugangsdaten zu vermeiden müssen Alternativen untersucht werden, welche eine Vorauthentifizierung ermöglichen. 
 
@@ -45,7 +45,7 @@ Grundsätzlich gilt es innerhalb der Kryptographie zwei Formen der Verschlüssel
     \item  Die \textbf{asymmetrische Verschlüsselung}, die mithilfe eines öffentlichen und eines privaten Schlüssels eine sichere Kommunikation aufbaut und aufrecht erhält.
 \end{enumerate}
 
-Ein bekannter Nachteil symmetrischer Verschlüsselungsmethoden, ist der Schlüsselaustausch und das Sicherstellen einer sicheren Kommunikation zwischen einer wachsenden Anzahl an Teilnehmern. Somit wäre eine symmetrische Art der Verschlüsselung suboptimal für einen Anwendungsfall bei digitalen Zwillingen.
+Ein bekannter Nachteil symmetrischer Verschlüsselungsmethoden, ist der Schlüsselaustausch und das Sicherstellen einer sicheren Kommunikation zwischen einer wachsenden Anzahl an Teilnehmern. Somit wäre eine symmetrische Art der Verschlüsselung suboptimal für einen Anwendungsfall bei digitalen Zwillingen. \marginpar{Warum?}
 
 Alternativ bieten sich dann noch Möglichkeiten asymmetrischer Verschlüsselungsarten an. Ein Vorteil dieser Art ist es, dass ein Schlüssel austausch sehr einfach erreicht werden kann, da der Aufbau der Verbindung auf Basis eines öffentlichen Schlüssels basiert. Nachteil dieser Methode ist es allerdings, dass der Verbindungsaufbau und die Geschwindigkeit der Verschlüsselung sehr langsam ist. Im speziellen wenn größere Datenmengen verschlüsselt werden müssen sind symmetrische Verschlüsselungen deutlich schneller. Außerdem stellen symmetrische Chiffren ein höheres Sicherheitsniveau zur Verfügung.
 
@@ -208,8 +208,41 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
 \begin{definition}
     The \ac{AMQP} is an open internet protocol for business messaging. It defines a binary wire-level protocol that allows for the reliable exchange of business messages between two parties. AMQP has a layered architecture and the specification is organized as a set of parts that reflects that architecture. Part 1 defines the AMQP type system and encoding. Part 2 defines the AMQP transport layer, an efficient, binary, peer-to-peer protocol for transporting messages between two processes over a network. Part 3 defines the AMQP message format, with a concrete encoding. Part 4 defines how interactions can be grouped within atomic transactions. Part 5 defines the AMQP security layers.
 \end{definition}
-\subsection{HTTP}
-\subsection{Websockets}
+
+Ähnlich wie bei \ac{MQTT} gibt es innerhalb von \ac{AMQP} mehrere Aktuere. Es gibt einen sogenannten \textit{Produzenten} der Nachricht, welche die zu übertragenden Informationen spezifiziert. Die Nachricht stellt dabei das Kernelement der gesamten Kommunikation dar. Diese Nachricht wird dann in einem Message Broker verarbeitet. Die Aufgaben des Message Brokers ist dabei äquivalent zu dem \ac{MQTT} Protokoll. Ein \textit{Konsument} kann sein Interesse an bestimmten Nachrichten bekunden, indem er auf sogenannte \textit{Exchanges} subscribed. Der Konsument hat somit die Möglichkeit Nachrichten, die innerhalb dieses Themas publiziert wurden anzufordern und zu verarbeiten.
+
+\ac{AMQP} unterscheidet sich allerdigns in der Funktionsweise des Brokers von \ac{MQTT}. Innerhalb des Brokers gibt es drei Kernbestandteile:
+\begin{enumerate}
+    \item Die \textbf{Exchange}:\\
+    Die Exchange definiert die Art der Nachrichtenübermittlung, im speziellen, ob es sich dabei um einen \textbf{Direct Exchange}, oder einen \textbf{Fanout Exchange} handelt. Der Direct Exchange stellt Nachrichten an einen einzigen Empfänger durch, wohingegen der Fanout Exchange die Nachricht an alle interessierten Queues vervielfältigt. Es gibt also zwei verschiedene Arten der Kommunikation mit einem oder wenigen Empfängern. Im Gegesnatz zu den obigen Methoden steht der sog. \textbf{Topic Exchange}. Der Topic Exchange ermöglicht es Platzhalter zu verwenden, um so nicht auf alle spezifischen Routen subscriben zu müssen.
+    \item Die \textbf{Routes}:\\
+    Routen stellen die Verbindung zwischen der Exchange und er Queue dar. Sie leiten Nachrichten, welche in einer Exchange zur Verfügung gestellt werden zu den interessierten Queues weiter. Entsprechend der gewählten Art der Exchange werden entsprechende Routing Regeln angelegt. Sie dienen daher als reine Nachrichtenübermittler
+    \item Die \textbf{Queues}:\\
+    Queues können entweder von dem Broker oder von einem Client mit einem Identifikator versehen werden. Queues stellen einen physischen Speicher dar, welcher als Speicher für die Nachrichten dient, die mittels einer Exchange publiziert werden. Clients interagieren direkt mit der Queue, um Nachrichten zu empfangen.
+\end{enumerate}
+
+In der Abbildung \vref{fig:message_flow_amqp} ist der Zusammenhang der verschiedenen Komponenten anhand der Verarbeitung einer Nachricht visualisiert.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node distance=4cm]
+        \node (publisher) [io] {Publisher};
+        \node (exchange) [process, right of=publisher] {Exchange};
+        \node (route) [process, right of=exchange] {Route};
+        \node (queue) [process, below of=route] {Queue};
+        \node (client) [io, below of=publisher] {Client};
+    
+        \draw [arrow] (publisher) -- (exchange);
+        \draw [arrow] (exchange) -- (route);
+        \draw [arrow] (route) -- (queue);
+        \draw [arrow] (queue) -- (client);
+    \end{tikzpicture}
+    \caption{Verarbeitung einer Nachricht über einen \ac{AMQP} Message Broker.\\Quelle: Eigene Darstellung}
+    \label{fig:message_flow_amqp}
+\end{figure}
+
+Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank der \textbf{Direct Exchange} direkt in \ac{AMQP} gelöst. Dies ermöglicht zusätzlich zu allen Funktionen, welche von \ac{MQTT} angeboten werden, einen erweiterten Einsatzbereich.
+
 \subsection{LoRaWAN}
 \subsection{Anforderungen an ein internes Kommunikationsmittel}
 
@@ -223,14 +256,6 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
 \begin{enumerate}
     \item Architekturkonzept
     \begin{itemize}
-        \item Common Schnittstellenformate, welche sind im Umlauf wie können sie zusammengeführt werden, sodass alle obigen Anforderungen noch laufen und erfüllt sind?
-        \begin{itemize}
-            \item Ein wenig die funktionalität und Idee hinter Eclipse Hono erklären. Dabei kurz die Grundlagen jedes Formats erklären
-            \item MQTT
-            \item AMQP
-            \item HTTP
-            \item WS (?)
-        \end{itemize}
         \item Unterscheidung zwischen einer Device-Registry und der Speicherung als DT
         \begin{itemize}
             \item Hier liegt der Übergang der Arbeit; Es müssen von Geräten in der Device Registy DTs gebildet werden, nach möglichkeit automatisiert, sodass dann Daten des Gerätes übertragen werden
@@ -240,14 +265,6 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
             \item Hier ein wenig auf die Ditto Idee eingehen.
             \item Konzept hinter Connections erklären; Was sind Connections, Was bringt das an Vorteilen mit sich
             \item Kombination zwischen Device-Registry und DT (hier liegt das Kernproblem!)
-        \end{itemize}
-        \item verschiedene Zugriffsarten auf die Daten eines DT
-        \begin{itemize}
-            \item Wie wird das alles exposed in Ditto?
-            \item Kommt natürlich auf den Anwendungsfall an
-            \item HTTP/WS
-            \item AMQP
-            \item usw.?
         \end{itemize}
         \item Welche Daten sind vorhanden und wie kann sichergestellt werden, dass ein speziell Modell für DT's vorliegt? $\rightarrow$ Hier kommt dan Vorto ins Spiel. Kurz das Konzept und Idee dahinter erläutern
         \begin{itemize}
@@ -261,6 +278,13 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
 \section{Wie kann das alles genutzt werden? -- ADAPTER}
 
 \section{Digital Twin Provider}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\linewidth]{img/ditto_arch.png}
+    \caption[Aufbau eines Digital Twin Providers]{Aufbau eines Digital Twin Providers am Beispiel von Eclipse Ditto.\\Quelle:}
+\end{figure}
+
 
 \begin{itemize}
     \item Bild über den internen Aufbau von Ditto

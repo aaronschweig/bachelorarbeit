@@ -1,12 +1,12 @@
 \chapter{Problemstellung und Lösungsansatz}
 
-Im folgenden Kapitel soll das Problem, welches bei der automatischen Erzeugung digitaler Zwillinge besteht, beschrieben werden. Dafür wird zuerst ein Ablauf dargestellt anhanddessen ein \ac{DT} erstellt wird. Dabei wird dann auf den aktuellen Ist-Zustand eingegangen. Es wird außerdem ien Soll-Zustand definiert, welcher erreicht werden soll, sodass spätere Konzepte daran gemessen werden können. Am Ende dieses Kapitels wird evaluiert, wo die Diskrepanz zwischen dem aktuellen Ist-Zustand und dem Soll-Zustand liegt.
+Im folgenden Kapitel soll das Problem, welches bei der automatischen Erzeugung digitaler Zwillinge besteht, beschrieben werden. Dafür wird zuerst ein Ablauf dargestellt anhand dessen ein \ac{DT} erstellt wird. Dabei wird dann auf den aktuellen Ist-Zustand eingegangen. Es wird außerdem ein Soll-Zustand definiert, welcher erreicht werden soll, sodass spätere Konzepte daran gemessen werden können. Am Ende dieses Kapitels wird evaluiert, wo die Diskrepanz zwischen dem aktuellen Ist-Zustand und dem Soll-Zustand liegt.
 
 \section{Die automatische Erzeugung digitaler Zwillinge}
 
 Das automatische Erzeugen digitaler Zwillinge stellt nur ein Teilziel in einem größeren Prozess dar, dessen Ziel es ist, mittels eines digitalen Zwilling eine dauerhaft ansprechbare Schnittstelle zu einen Endgerät zu haben. Bei dem Teilprozess der Erzeugung digitaler Zwillinge spielen zwei Komponenten eine wesentliche Rolle. In Abbildung \vref{fig:high_level} sind die Kernkomponenten sowie deren Zusammenhang aufgezeigt. Im speziellen spielen dabei die Device Registry und der Digital Twin Provider eine Rolle.
 
-Da es sich bei diesen beiden Bestandteilen um voneinander unabhänige Anwendungen handelt, muss eine dauerhafte Verbindung sichergestellt werden. Außerdem müssen Geräte, die innerhalb der Device Registry liegen auch über den Digital Twin Provider bereitgestellt werden können. Für beide Komponenten gibt es spezifische Heruasforderungen, welche im folgenden näher betrachtet werden sollen.
+Da es sich bei diesen beiden Bestandteilen um voneinander unabhänige Anwendungen handelt, muss eine dauerhafte Verbindung sichergestellt werden. Außerdem müssen Geräte, die innerhalb der Device Registry liegen auch über den Digital Twin Provider bereitgestellt werden können. Für beide Komponenten gibt es spezifische Heruasforderungen, welche im Folgenden näher betrachtet werden sollen.
 
 \subsection{Device Registry}
 
@@ -34,9 +34,9 @@ Kernaufgabe der Device Registry ist es, wie in \vref{def:device_registry} noch e
     \label{fig:high_level}
 \end{figure}
 
-Des weiteren gilt es die Herausforderung der Authentifizierung eines Endgerätes über die Device Registry zu lösen. Vor allem das Problem der Zugangsdaten muss gelöst werden, sodass ein problemloser Einsatz und Austausch von Endgeräten möglich ist, ohne administrativen Aufwand betrieben zu müssen. Dies hat auch Auswirkungen auf die wirtschaftlichen Auswirkungen, da ein geringer Wartungsaufwand auch geringere Kosten mit sich bringt. Ziel der in der Architektur verwendeten Device Registry sollte es dementsprechend sein, eine einfache, wartungsarme Authentifizierungsmethode bereitzustellen.
+Des weiteren gilt es die Herausforderung der Authentifizierung eines Endgerätes über die Device Registry zu lösen. Vor allem das Problem der Zugangsdaten muss gelöst werden, sodass ein problemloser Einsatz und Austausch von Endgeräten möglich ist, ohne administrativen Aufwand betreiben zu müssen. Dies hat auch Konsequenzen auf die wirtschaftlichen Auswirkungen, da ein geringer Wartungsaufwand auch geringere Kosten mit sich bringt. Ziel der in der Architektur verwendeten Device Registry sollte es dementsprechend sein, eine einfache, wartungsarme Authentifizierungsmethode bereitzustellen.
 
-Außerdem muss eine Device Registry generisch einsetzbar sein. Die Praktikabiliät einer Lösung, welche nur Geräte eines Anwenders unterstützt und keine Möglichkeit bereitstellt, eine Sichtbarkeitseinstellung oder Authentisierung gewisser Geräte für bestimmte Anwender vorzunehmen würde den Einsatz einschränken. Auch hier würde eine Realisierung von mehr Anwendungsfällen zu höheren Kosten führen, da eventuell mehrere Serverressourcen bereitgestellt werden müssen.
+Außerdem muss eine Device Registry generisch einsetzbar sein. Eine Lösung, welche nur Geräte eines Anwenders unterstützt und keine Möglichkeit bereitstellt, eine Sichtbarkeitseinstellung oder Authentisierung gewisser Geräte für bestimmte Anwender vorzunehmen, würde den Einsatz einschränken. Auch hier würde eine Realisierung von mehr Anwendungsfällen zu höheren Kosten führen, da eventuell mehrere Serverressourcen bereitgestellt werden müssen.
 
 \subsection*{Anforderungen an eine Device Registry}
 
@@ -63,7 +63,7 @@ Gleichzeitig gilt eine Anforderung, welche bereits für die Device Registry von 
 
 Der Digital Twin Provider muss außerdem ein umfangreiches \enquote{Policy} Modul integrieren, um Zugriffsregeln bis auf Eigenschaftenebene eines \ac{DT}s bestimmen zu können. Dies ist von immenser Bedeutung, um ein durchgängiges Authentifizierungs- und Authorisierungskonzept aufrechtezuerhalten und externe Business Applications nach dem \enquote{least visibility} Prinzip bedienen zu können, auch um schädliche Zugriffe zu vermeiden.
 
-Business Applikationen verwenden unterschiedlichste Kommunikationsprotokolle, um Daten zu erhalten. Um sicherzustellen, dass auch hier eine Vielzahl von Applikationen bedient werden kann, müssen wie in der Device Registry möglichst viele Protokolle unterstützt werden und nach Möglichkeit erweiterbar sein. Die bedeutensten Formate für Business Applikationen sind:
+Business Applikationen verwenden unterschiedlichste Kommunikationsprotokolle, um Daten zu erhalten. Um sicherzustellen, dass auch hier eine Vielzahl von Applikationen bedient werden kann, müssen, wie in der Device Registry, möglichst viele Protokolle unterstützt werden und nach Möglichkeit erweiterbar sein. Die bedeutensten Formate für Business Applikationen sind:
 
 \begin{itemize}
     \item \texttt{HTTP/1.x} und \texttt{HTTP/2.0}\footnotetext{HTTP 2 ermöglicht neben dem parallelen Übertragen von Daten auch das Streamen von Datenpaketen. HTTP 1 dagegen setzt nur ein klassisches Request-Response Pattern um.}
@@ -72,18 +72,18 @@ Business Applikationen verwenden unterschiedlichste Kommunikationsprotokolle, um
 
 Diese Protokolle ermöglichen den einfachen Transfer von Telemetriedaten, sowohl auf Anfrage mittels \texttt{HTTP/1.x} oder auch kontinuierlich via Websockets oder \texttt{HTTP/2.0}.
 
-Wichtig ist ebenfalls, das erzwingen einer konsitenten Struktur der digitalen Zwillinge. Dabei gilt es sicherzustellen, dass sowohl eine Struktur für die statischen Informationen (z.B. Modellnummer, Seriennummer, Standort, etc.) als auch die dynamischen Informationen (z.B. physische und virtuelle Sensoren) vorhanden ist. Dabei stellt es \textbf{nicht} die Aufgabe des \ac{DT} Providers dar, eine Verwaltungsstrutkur bereitzustellen, sondern nur auf Basis gegebener Strukturinformationen Validierungen durchzuführen und die Struktur zu erzwingen.
+Wichtig ist ebenfalls, das erzwingen einer konsistenten Struktur der digitalen Zwillinge. Dabei gilt es sicherzustellen, dass sowohl eine Struktur für die statischen Informationen (z.B. Modellnummer, Seriennummer, Standort, etc.) als auch die dynamischen Informationen (z.B. physische und virtuelle Sensoren) vorhanden ist. Dabei stellt es \textbf{nicht} die Aufgabe des \ac{DT} Providers dar, eine Verwaltungsstrutkur bereitzustellen, sondern nur auf Basis gegebener Strukturinformationen Validierungen durchzuführen und die Struktur zu erzwingen.
 
 \subsection{Problemstellung}
 
-Nun da die für das Problem relevanten Komponenten einmal näher beleuchtet wurden, sowie deren grundlegenden Fähigkeiten beschrieben wurden, kann näher auf die Problematik eingegangen werden, zu welcher diese Arbeit eine Löung bereitstellen soll. 
+Nun da die für das Problem relevanten Komponenten einmal näher beleuchtet, sowie deren grundlegenden Fähigkeiten beschrieben wurden, kann näher auf die Problematik eingegangen werden, zu welcher diese Arbeit eine Lösung bereitstellen soll. 
 
-Die Device Registry stellt ein umfangreiches Verwaltungssystem für die physischen Geräte bereit und ist mit Schnittstellen ausgestattet, welche von anderen Applikationen genutzt werden können. Eine dieser Applikationen ist der Digital Twin Provider, der Informationen zu Geräten aus der Registry nutzen kann, um digitale Zwillinge zu konstruieren und bereitzustellen. Ebenfalls können die \ac{DT}s an dieser Stelle verwaltet werden. Allerdings können digitale Zwilling auch aufgrund der Anforderung einer festen Struktur \textbf{nicht} automatisch mit dem Senden der ersten Telemetriedaten nicht erstellt werden. Zusätzlich dazu stellt die Anforderung der genauen Definition einer Policy ein Problem bei der automatischen Erzeugung dar.
+Die Device Registry stellt ein umfangreiches Verwaltungssystem für die physischen Geräte bereit und ist mit Schnittstellen ausgestattet, welche von anderen Applikationen genutzt werden können. Eine dieser Applikationen ist der Digital Twin Provider, der Informationen zu Geräten aus der Registry nutzen kann, um digitale Zwillinge zu konstruieren und bereitzustellen. Ebenfalls können die \ac{DT}s an dieser Stelle verwaltet werden. Allerdings können digitale Zwillinge auch aufgrund der Anforderung einer festen Struktur \textbf{nicht} automatisch mit dem Senden der ersten Telemetriedaten erstellt werden. Zusätzlich dazu stellt die Anforderung der genauen Definition einer Policy ein Problem bei der automatischen Erzeugung dar.
 
 Dies führt zu folgendem akkumulierten Problem.
 
 \begin{problem}[Automatische Erzeugung digitaler Zwillinge]
-    Durch die Modularität der Gesamtarchitektur sind die Device Registry und der Digital Twin Provider zwei voneinander getrennt operierende Systeme. Jedes dieser Systeme nutzt eigene Persitenzmechanismen, da unterschiedliche Anforderungen an die jewiligen Systeme bestehen. Deshalb gibt es keinen geteilten Speicher, der einen integrierten automatischen Austausch der benötigten Informationen ermöglicht. Gleichzeitig fehlt eine Instanz, die Strukturinformationen zu digitalen Zwillingen bereitstellen kann. Die Integration dieser drei Komponenten muss automatisiert werden. Es wird ein System benötigt, welches die folgenden Kriterien erfüllt:
+    Durch die Modularität der Gesamtarchitektur sind die Device Registry und der Digital Twin Provider zwei voneinander getrennt operierende Systeme. Jedes dieser Systeme nutzt eigene Persitenzmechanismen, da unterschiedliche Anforderungen an die jeweiligen Systeme bestehen. Deshalb gibt es keinen geteilten Speicher, der einen integrierten automatischen Austausch der benötigten Informationen ermöglicht. Gleichzeitig fehlt eine Instanz, die digitalen Zwillingen Strukturinformationen bereitstellen kann. Die Integration dieser drei Komponenten muss automatisiert werden. Es wird ein System benötigt, welches die folgenden Kriterien erfüllt:
 
     \begin{itemize}
         \item Erkennen eines neu registrierten Gerätes innerhalb der Device Registry.
@@ -119,9 +119,34 @@ Es wird ein dritte Komponente hinzugefügt, welche die oben beschriebenen Aufgab
     \label{fig:high_level_conn}
 \end{figure}
 
-In der Abbildung \vref{fig:high_level_conn} ist die Integration des Connectors in die Architektur beschrieben. Es lässt sich erkennen, dass dieser \textbf{keine hohe Kopplung} in seiner Integration mit sich bringt. Entsprechend kann dieser Service ohne Probleme zusätzlich über einen Server bereitgestellt werden. \\
+In der Abbildung \vref{fig:high_level_conn} ist die Integration des Connectors in der Architektur beschrieben. Es lässt sich erkennen, dass dieser \textbf{keine hohe Kopplung} in seiner Integration mit sich bringt. Entsprechend kann dieser Service ohne Probleme zusätzlich über einen Server bereitgestellt werden. \\
 Es lässt sich auch erkennen, dass unter Umständen eine direkte Verbindung zum Endgerät für einen kurzen Zeitraum benötigt wird. Diese ist allerdings als Optional anzusehen, da sie nur in spezifischen Anwendungsszenarien von Bedeutung ist.
 
-Diese Komponente benötigt zum operieren wie in der Abbildung beschreiben Zugriffe auf die Device Registry und den Digital Twin Provider. Die Aufgabe die mithilfe des Connectors erledigt wird, besteht darin, im Falle eines neu registrierten Gerätes einen korrespondieren \ac{DT} zu erstellen und diesen mit äquivaltenter Sichtbarkeit auszustatten. Zusätzlich können Standardpolicies vergeben werden, die mitunter auch entsprechend der Sichtbarkeit individuell angepasst werden können. Ebenfalls fällt dem Connector die Aufgabe zu, benötigte Strukturinformationen während des Erstellens bereitzustellen. Dieser Vorgang kann sich von Anwendung zu Anwendung unterscheiden und lässt deshalb die genaue Umsetzung offen.\\
-Es kann eine statische Vorlage hinterlegt werden, welche dann entsprechender Kriterien angewendet werden, oder es kann eine externe Registry genutzt werden, welche referenziert werden kann.
+Diese Komponente benötigt zum operieren, wie in der Abbildung beschrieben, Zugriffe auf die Device Registry und den Digital Twin Provider. Die Aufgabe, die mithilfe des Connectors erledigt wird, besteht darin, im Falle eines neu registrierten Gerätes einen korrespondierenden \ac{DT} zu erstellen und diesen mit äquivalenter Sichtbarkeit auszustatten. Zusätzlich können Standardpolicies vergeben werden, die mitunter auch entsprechend der Sichtbarkeit individuell angepasst werden können. Ebenfalls fällt dem Connector die Aufgabe zu, benötigte Strukturinformationen während des Erstellens bereitzustellen. Dieser Vorgang kann sich von Anwendung zu Anwendung unterscheiden und lässt deshalb die genaue Umsetzung offen.\\
+Es kann eine statische Vorlage hinterlegt werden, anhand welcher dann entsprechende Kriterien angewendet werden, oder es kann eine externe Registry genutzt werden, welche referenziert werden kann.
+
+Optional wird auch eine Möglichkeit angeboten Metriken zur Verarbeitung in einer Prometheus-Instanz bereitzustellen. Diese bieten sowohl Einsicht in Hardwaremetriken, als auch konfigurierbare, softwarezentrierte Metriken. Die Hardwaremetriken sind mit einer flexiblen Implementierung ausgestattet, sodass es nicht von Bedeutung ist, ob der Service innerhalb einer Virtualisierungssoftware läuft oder direkt auf einem Server gestartet wird. Damit können mehr Anwendungsfälle realisiert werden.
+
+\begin{figure}[b]
+    \centering
+    \begin{tikzpicture}[node distance=3cm]
+        \draw (-2.5,1) -- node[anchor=east, text width=2.75cm] {External Applications} (-2.5, -4);
+        \node (dts) [process] {DT Provider Service};
+        \node (drs) [process, right of=dts, xshift=4cm] {Device Registry Service};
+        \node (ms) [process, below of=dts] {Monitoring Service};
+        \node (cpa) [process, below of=drs] {Custom Protocol Adapters};
+    
+        \draw [dashed] (dts) -- (drs);
+        \draw [dashed] (dts) -- (ms);
+        \draw [dashed] (dts) -- (cpa);
+        \draw [dashed] (drs) -- (cpa);
+        \draw [dashed] (drs) -- (ms);
+        \draw [dashed] (cpa) -- (ms);
+    \end{tikzpicture}
+    \caption{Interne Architektur des Connectors\\Quelle: Eigene Darstellung}
+    \label{fig:internal_arch}
+\end{figure}
+Ebenfalls wird die interne Struktur des Connectors modular aufgebaut, sodass eine Erweiterung oder Einschränkung der Funktionalität einfach realisierbar ist. In Abbildung \vref{fig:internal_arch} ist ein exemplarischer Aufbau skizziert.
+
+In der Abbildung wird deutlich, dass es sich bei den bereitgestellten Services um austauschbare und anpassbare Elemente handelt. Bei der konkreten Implementierung können die jeweiligen Services und Adapter entsprechend der konkreten gewählten Vertreter der einzelnen Komponenten (Device Registry, Digital Twin Provider, etc.) gewählt werden.
 
