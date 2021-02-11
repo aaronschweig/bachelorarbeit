@@ -313,17 +313,69 @@ Eine der wichtigsten Funktionen des Digital Twin Providers stellt die strukturie
     \caption[Integration der Strukturregistry in die Gesamtarchitektur]{Integration der Strukturregistry in die Gesamtarchitektur.\\Quelle: Eigene Darstellung}
 \end{figure}
 
+Das einfügen einer Strukturregistry ermöglicht es, die Komplexität verschiedener Austauschformate zu reduzieren. Mithilfe einer Mapping-Engine, können Regeln definiert werden, die ein Eingangsformat in ein einheitliches Format zur Nutzung innerhalb einer Applikation transfomieren. Dies hat den Vorteil, die Kopplung zwischen Endgerät, dem korrespondierenden \ac{DT} und der Applikation zu verringern. Die nötige Logik, um die verschiedenen Datenformate zu interpretieren wird von der Strukturregistry übernommen und muss nicht in jeder konsumierenden Applikation umgesetzt werden.
 
+Des weiteren können so ohne Anpassungen in einer Applikation vornehmen zu müssen weitere Gerätetypen genutzt werden. Selbst wenn sich die komplette Sensorenlandschaft ändert, z.B. bei einem Anbieterwechsel, o.ä., kann mithilfe eines Mappings innerhalb der Strukturregistry sichergestellt werden, dass das neue Datenformat in das einheitliche, von allen Applikationen verstandene Format transformiert wird.
+
+Zusammenfassend lassen sich folgende Vorteile mit der Nutzung einer Strukturregistry erreichen:
+
+\begin{enumerate}
+    \item Die time to market wird reduziert, da Entwicklungsaufwände sinken und durch klare Datenformate parallelisiert werden können.
+    \item Wartungsarbeiten oder spätere Anpassungen auf neue Anforderungen sind einfacher umsetzbar, da einheitliche Datenformate vorhanden sind.
+\end{enumerate}
+
+Sollte es nicht möglich sein, eine unabhängige Strukturregistry bereitzustellen, können diese Vorteile trotzdem erreicht werden. Dafür muss der Digital Twin Provider eine Mapping Engine anbieten, die es ermöglicht Telemetriedaten, die von der Device Registry empfangen werden, zu transformieren. So kann auch ohne den Einsatz einer dedizierten Strukturregistry der Vorteil einer einheitlichen Datenstruktur erreicht werden.\\
+Ein Nachteil dieser leichtgewichten Variante ist jedoch, dass die Kopplung zwischen Digital Twin Provider und Device Registry noch einmal erhöht wird, was die Modularität der Architektur negativ beeinflusst.
+
+\subsection{Verwaltung von digitalen Zwillingen}
+
+Ein weiterer wichtiger Aspekt ist die Verwaltung digitaler Zwillinge. Der Digital Twin Provider erhält die Telemetriedaten über die Device Registry. Es gilt aber zusätzlich statische Informationen über den \ac{DT} zu verwalten. Dafür müssen entsprechende API Schnittstellen bereitgestellt werden.
+
+Auch wird eine erweiterte Suchfunktionalität benötigt, um spezielle Gruppen digitaler Zwillinge einfach identifizieren zu können. Dies ermöglicht applikationspezifische Logik mithilfe von Suchanfragen umzusetzen. Ein exemplarische Aufbau eines digitalen Zwillings innerhalb eines Digital Twin Providers kann folgendermaßen aussehen:
+
+\begin{verbatim}
+{
+  "thingId": "the.namespace:theId",
+  "policyId": "the.namespace:thePolicyId",
+  "definition": "org.eclipse.ditto:HeatingDevice:2.1.0",
+  "attributes": {
+      "someAttr": 32,
+      "manufacturer": "ACME corp"
+  },
+  "features": {
+      "heating-no1": {
+          "properties": {
+              "connected": true,
+              "complexProperty": {
+                  "street": "my street",
+                  "house no": 42
+              }
+          },
+          "desiredProperties": {
+              "connected": false
+          }
+      },
+      "switchable": {
+          "definition": [ "org.eclipse.ditto:Switcher:1.0.0" ],
+          "properties": {
+              "on": true,
+              "lastToggled": "2020-11-15T18:21Z"
+          }
+      }
+  }
+}
+\end{verbatim}
+
+Innerhalb der Struktur lassen sich einige umgesetzte Anforderungen erkennen. Eine Anforderung, welche bereits in der Device Registry eine große Rolle spielte, war eine Umsetzung eines Namespacing Konzepts. Dieses Konzept wird in dem Digital Twin provider mithilfe fester Präfixe erreicht. Exemplarisch dafür kann die \texttt{thingId} betrachtet werden. Der Namespace wird dabei mittels eines Doppelpunktes von dem eigentlichen \enquote{Namen} des \ac{DT}s abgetrennt. \\
+Dieses Konzept kann auch bei anderen Ressourcen des Digital Twin Providers genutzt werden. Somit wird erreicht, dass der Provider von mehreren Anwendern gleichzeitig genutzt werden kann.
+
+Des weiteren lässt sich 
+
+\subsection{Integration von Policies zur Zugriffsbeschränkung}
 
 \begin{itemize}
     \item Bild über den internen Aufbau von Ditto
     \item Genauer auf problematische Funktionen eingehen, die in den Anforderungen beschrieben wurden
-    \item Überleiteung auf Vorto
-    \begin{itemize}
-        \item Nutzen von Vorto und beispielhafter Aufbau
-        \item Integration von Vorto in Ditto
-    \end{itemize}
-    \item Zusammenführen der Hono-Eclipse Kombination mit Vorto
     \item Wo greift alles gut ineinander
     \item Tatsächliche Überleitung auf Softwareumsetzung
 \end{itemize}

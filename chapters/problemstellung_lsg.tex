@@ -10,7 +10,10 @@ Da es sich bei diesen beiden Bestandteilen um voneinander unabhänige Anwendunge
 
 \subsection{Device Registry}
 
-Kernaufgabe der Device Registry ist es, wie in \vref{def:device_registry} noch einmal genauer beleuchtet, alle relevanten Endgeräte verwalten zu können. Um dieses Ziel erreichen zu können muss sichergestellt werden, dass die Vielzahl der im \ac{IoT} üblichen Kommunikationsprotokolle unterstützt wird. Würden nicht alle wichtigen Protokolle unterstützt werden, so wäre die Einsatzfähigkeit der Anwendung in Frage zu stellen. Zu den wichtigsten Protokollen gehören unter anderem:
+Kernaufgabe der Device Registry ist es, wie in \vref{def:device_registry} noch einmal genauer beleuchtet, alle relevanten Endgeräte verwalten zu können. Um dieses Ziel erreichen zu können muss sichergestellt werden, dass die Vielzahl der im \ac{IoT} üblichen Kommunikationsprotokolle unterstützt wird. Würden nicht alle wichtigen Protokolle unterstützt werden, so wäre die Einsatzfähigkeit der Anwendung in Frage zu stellen. 
+
+\pagebreak
+Zu den wichtigsten Protokollen gehören unter anderem:
 \begin{itemize}
     \item MQTT
     \item AMQP
@@ -67,7 +70,7 @@ Der Digital Twin Provider muss außerdem ein umfangreiches \enquote{Policy} Modu
 Business Applikationen verwenden unterschiedlichste Kommunikationsprotokolle, um Daten zu erhalten. Um sicherzustellen, dass auch hier eine Vielzahl von Applikationen bedient werden kann, müssen, wie in der Device Registry, möglichst viele Protokolle unterstützt werden und nach Möglichkeit erweiterbar sein. Die bedeutensten Formate für Business Applikationen sind:
 
 \begin{itemize}
-    \item \texttt{HTTP/1.x} und \texttt{HTTP/2.0}\footnotetext{HTTP 2 ermöglicht neben dem parallelen Übertragen von Daten auch das Streamen von Datenpaketen. HTTP 1 dagegen setzt nur ein klassisches Request-Response Pattern um.}
+    \item \texttt{HTTP/1.x} und \texttt{HTTP/2.0}\footnotetext{HTTP 2 ermöglicht neben dem parallelen Übertragen von Daten auch das Streamen von Datenpaketen. HTTP 1 dagegen setzt nur ein klassisches Request-Response Pattern um.\autocite{wijnants2018http}}
     \item Websockets
 \end{itemize}
 
@@ -78,6 +81,8 @@ Wichtig ist ebenfalls, das erzwingen einer konsistenten Struktur der digitalen Z
 \subsection{Problemstellung}
 
 Nun da die für das Problem relevanten Komponenten einmal näher beleuchtet, sowie deren grundlegenden Fähigkeiten beschrieben wurden, kann näher auf die Problematik eingegangen werden, zu welcher diese Arbeit eine Lösung bereitstellen soll. 
+
+\pagebreak
 
 Die Device Registry stellt ein umfangreiches Verwaltungssystem für die physischen Geräte bereit und ist mit Schnittstellen ausgestattet, welche von anderen Applikationen genutzt werden können. Eine dieser Applikationen ist der Digital Twin Provider, der Informationen zu Geräten aus der Registry nutzen kann, um digitale Zwillinge zu konstruieren und bereitzustellen. Ebenfalls können die \ac{DT}s an dieser Stelle verwaltet werden. Allerdings können digitale Zwillinge auch aufgrund der Anforderung einer festen Struktur \textbf{nicht} automatisch mit dem Senden der ersten Telemetriedaten erstellt werden. Zusätzlich dazu stellt die Anforderung der genauen Definition einer Policy ein Problem bei der automatischen Erzeugung dar.
 
@@ -120,15 +125,16 @@ Es wird ein dritte Komponente hinzugefügt, welche die oben beschriebenen Aufgab
     \label{fig:high_level_conn}
 \end{figure}
 
-In der Abbildung \vref{fig:high_level_conn} ist die Integration des Connectors in der Architektur beschrieben. Es lässt sich erkennen, dass dieser \textbf{keine hohe Kopplung} in seiner Integration mit sich bringt. Entsprechend kann dieser Service ohne Probleme zusätzlich über einen Server bereitgestellt werden. \\
-Es lässt sich auch erkennen, dass unter Umständen eine direkte Verbindung zum Endgerät für einen kurzen Zeitraum benötigt wird. Diese ist allerdings als Optional anzusehen, da sie nur in spezifischen Anwendungsszenarien von Bedeutung ist.
+\pagebreak
+
+In der Abbildung \vref{fig:high_level_conn} ist die Integration des Connectors in der Architektur beschrieben. Es lässt sich erkennen, dass dieser \textbf{keine hohe Kopplung} in seiner Integration mit sich bringt. Entsprechend kann dieser Service ohne Probleme zusätzlich über einen Server bereitgestellt werden. Es lässt sich auch erkennen, dass unter Umständen eine direkte Verbindung zum Endgerät für einen kurzen Zeitraum benötigt wird. Diese ist allerdings als Optional anzusehen, da sie nur in spezifischen Anwendungsszenarien von Bedeutung ist.
 
 Diese Komponente benötigt zum operieren, wie in der Abbildung beschrieben, Zugriffe auf die Device Registry und den Digital Twin Provider. Die Aufgabe, die mithilfe des Connectors erledigt wird, besteht darin, im Falle eines neu registrierten Gerätes einen korrespondierenden \ac{DT} zu erstellen und diesen mit äquivalenter Sichtbarkeit auszustatten. Zusätzlich können Standardpolicies vergeben werden, die mitunter auch entsprechend der Sichtbarkeit individuell angepasst werden können. Ebenfalls fällt dem Connector die Aufgabe zu, benötigte Strukturinformationen während des Erstellens bereitzustellen. Dieser Vorgang kann sich von Anwendung zu Anwendung unterscheiden und lässt deshalb die genaue Umsetzung offen.\\
 Es kann eine statische Vorlage hinterlegt werden, anhand welcher dann entsprechende Kriterien angewendet werden, oder es kann eine externe Registry genutzt werden, welche referenziert werden kann.
 
 Optional wird auch eine Möglichkeit angeboten Metriken zur Verarbeitung in einer Prometheus-Instanz bereitzustellen. Diese bieten sowohl Einsicht in Hardwaremetriken, als auch konfigurierbare, softwarezentrierte Metriken. Die Hardwaremetriken sind mit einer flexiblen Implementierung ausgestattet, sodass es nicht von Bedeutung ist, ob der Service innerhalb einer Virtualisierungssoftware läuft oder direkt auf einem Server gestartet wird. Damit können mehr Anwendungsfälle realisiert werden.
 
-\begin{figure}[b]
+\begin{figure}
     \centering
     \begin{tikzpicture}[node distance=3cm]
         \draw (-2.5,1) -- node[anchor=east, text width=2.75cm] {External Applications} (-2.5, -4);
