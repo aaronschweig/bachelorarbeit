@@ -369,9 +369,41 @@ Auch wird eine erweiterte Suchfunktionalität benötigt, um spezielle Gruppen di
 Innerhalb der Struktur lassen sich einige umgesetzte Anforderungen erkennen. Eine Anforderung, welche bereits in der Device Registry eine große Rolle spielte, war eine Umsetzung eines Namespacing Konzepts. Dieses Konzept wird in dem Digital Twin provider mithilfe fester Präfixe erreicht. Exemplarisch dafür kann die \texttt{thingId} betrachtet werden. Der Namespace wird dabei mittels eines Doppelpunktes von dem eigentlichen \enquote{Namen} des \ac{DT}s abgetrennt. \\
 Dieses Konzept kann auch bei anderen Ressourcen des Digital Twin Providers genutzt werden. Somit wird erreicht, dass der Provider von mehreren Anwendern gleichzeitig genutzt werden kann.
 
-Des weiteren lässt sich 
+Des weiteren lässt sich die Persistenz der dynamischen und statischen Daten erkennen. Innerhalb der \texttt{attributes} sind alle statischen Informationen über den digitalen Zwilling gespeichert. Hierbei ist prinzipiell keine feste Struktur vorgegeben und es können beliebe Werte gespeichert werden. Diese Werte können zur weiteren Identifikation genutzt werden. Gleichzeitig können diese Werte bei der Suche und Gruppierung von digitalen Zwillingen eingesetzt werden.
 
 \subsection{Integration von Policies zur Zugriffsbeschränkung}
+
+Wie bereits in der Datenstruktur zu erkennen ist, muss dem digitalen Zwilling eine Policy zugewiesen werden. Die Aufgabe einer Policy besteht darin, Zugriffe auf Attribute oder den gesamten digitalen Zwilling zu steuern. So kann sichergestellt werden, dass Informationen nur berechtigten Applikationen zur Verfügung gestellt werden. Die Struktur einer Policy kann folgendermaßen aussehen:
+
+\begin{verbatim}
+{
+  "policyId": "my.namespace:policy-a",
+  "entries": {
+    "observer": {
+      "subjects": {
+        "nginx:observer-client": {
+          "type": "technical client"
+        },
+        "nginx:some-users": {
+          "type": "a group of users"
+        }
+      },
+      "resources": {
+        "thing:/features/featureX": {
+          "grant": ["READ"],
+          "revoke": []
+        },
+        "thing:/features/featureY": {
+          "grant": ["READ"],
+          "revoke": []
+        }
+      }
+    }
+  }
+}
+\end{verbatim}
+
+Die Umsetzung eines policy-basierten Zugriffssystems muss eine möglichst hohe Dynamik haben, damit die dynamische Struktur der Daten eines digitalen Zwillings unterstützt werden kann. Es lässt sich ausserdem erkenne, dass auch hier bei der \texttt{policyId} wieder dasselbe Konzept zum Namespacing genutzt wird, wie auch bei der Speicherung des \ac{DT}s an sich. Es können verschiedene \enquote{Rollen} innerhalb der Policy definert werden, welche unterschiedliche Nutzergruppen repräsentieren können. Grundsätzlich folgt die Implementierung aber dem Konzept einer \ac{ACL}. Es werden also \textbf{explizit} alle Nutzer benannt, die Zugriff auf eine Ressource haben. Diese werden innerhalb des \texttt{subject} Keys definiert. Die \texttt{resources} beschreiben ebenfalls \textbf{explizit} welche Operationen genehmigt oder verweigert
 
 \begin{itemize}
     \item Bild über den internen Aufbau von Ditto
