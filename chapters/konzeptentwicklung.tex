@@ -204,7 +204,7 @@ Eine Besonderheit der bidirektionalen Kommunikation mittels \ac{MQTT} stellt das
             \node (dr2) [process, right of=dev2,below of=dr1, xshift=-2cm] {MQTT-Broker};
 
             \draw [arrow] (dev1) -- node[anchor=south] {request/<unique identifier>} (dr1);
-            \draw [thick] (dev2) -- node[anchor=south] {subscribe response/<unique identifier>} (dr2);
+            \draw [arrow, thick] (dev2) -- node[anchor=south] {subscribe response/<unique identifier>} (dr2);
         \end{tikzpicture}
         \caption[Request-Response Pattern innerhalb von MQTT]{Beispielhafte Umsetzung eines Request-Response Patterns innerhalb von MQTT.\\Quelle: Eigene Darstellung}
     \end{figure}
@@ -216,7 +216,7 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
 \subsection{AMQP}
 
 \begin{definition}
-    \enquote{AMQP is a lightweight M2M protocol, which was developed by John O’Hara at JPMorgan Chase in London, UK in 2003. It is a corporate messaging protocol designed for reliability, security, provisioning and interoperability. AMQP supports both request/response and publish/subscribe architecture.}\autocite{naik2017choice}
+    \enquote{\ac{AMQP} is a lightweight M2M protocol, which was developed by John O’Hara at JPMorgan Chase in London, UK in 2003. It is a corporate messaging protocol designed for reliability, security, provisioning and interoperability. AMQP supports both request/response and publish/subscribe architecture.}\autocite{naik2017choice}
 \end{definition}
 
 Ähnlich wie bei \ac{MQTT} gibt es innerhalb von \ac{AMQP} mehrere Akteure. Es gibt einen sogenannten \textit{Produzenten} der Nachricht, welche die zu übertragenden Informationen spezifiziert. Die Nachricht stellt dabei das Kernelement der gesamten Kommunikation dar. Diese Nachricht wird dann in einem Message Broker verarbeitet. Die Aufgaben des Message Brokers ist dabei äquivalent zu dem \ac{MQTT} Protokoll. Ein \textit{Konsument} kann sein Interesse an bestimmten Nachrichten bekunden, indem er auf sogenannte \textit{Exchanges} subscribed. Der Konsument hat somit die Möglichkeit Nachrichten, die innerhalb dieses Themas publiziert wurden anzufordern und zu verarbeiten.
@@ -224,7 +224,7 @@ Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden kön
 \ac{AMQP} unterscheidet sich allerdigns in der Funktionsweise des Brokers von \ac{MQTT}. Innerhalb des Brokers gibt es drei Kernbestandteile:
 \begin{enumerate}
     \item Die \textbf{Exchange}:\\
-    Die Exchange definiert die Art der Nachrichtenübermittlung, im speziellen, ob es sich dabei um einen \textbf{Direct Exchange}, oder einen \textbf{Fanout Exchange} handelt. Der Direct Exchange stellt Nachrichten an einen einzigen Empfänger durch, wohingegen der Fanout Exchange die Nachricht an alle interessierten Queues vervielfältigt. Es gibt also zwei verschiedene Arten der Kommunikation mit einem oder wenigen Empfängern. Im Gegesnatz zu den obigen Methoden steht der sog. \textbf{Topic Exchange}. Der Topic Exchange ermöglicht es Platzhalter zu verwenden, um so nicht auf alle spezifischen Routen subscriben zu müssen.
+    Die Exchange definiert die Art der Nachrichtenübermittlung, im speziellen, ob es sich dabei um einen \textbf{Direct Exchange}, oder einen \textbf{Fanout Exchange} handelt. Der Direct Exchange stellt Nachrichten an einen einzigen Empfänger durch, wohingegen der Fanout Exchange die Nachricht an alle interessierten Queues vervielfältigt. Es gibt also zwei verschiedene Arten der Kommunikation mit einem oder wenigen Empfängern. Im Gegensatz zu den obigen Methoden steht der sog. \textbf{Topic Exchange}. Der Topic Exchange ermöglicht es Platzhalter zu verwenden, um so nicht auf alle spezifischen Routen subscriben zu müssen.
     \item Die \textbf{Routes}:\\
     Routen stellen die Verbindung zwischen der Exchange und er Queue dar. Sie leiten Nachrichten, welche in einer Exchange zur Verfügung gestellt werden, zu den interessierten Queues weiter. Entsprechend der gewählten Art der Exchange werden entsprechende Routing Regeln angelegt. Sie dienen daher als reine Nachrichtenübermittler
     \item Die \textbf{Queues}:\\
@@ -253,6 +253,7 @@ In der Abbildung \vref{fig:message_flow_amqp} ist der Zusammenhang der verschied
 
 Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank der \textbf{Direct Exchange} direkt in \ac{AMQP} gelöst. Dies ermöglicht zusätzlich zu allen Funktionen, welche von \ac{MQTT} angeboten werden, einen erweiterten Einsatzbereich.
 
+\pagebreak
 \subsection{LoRaWAN}
 % \subsection{Anforderungen an ein internes Kommunikationsmittel}
 
@@ -289,7 +290,7 @@ Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank de
 
 \section{Digital Twin Provider}
 
-In Folgendem Abschnitt soll der genaue Aufbau eines Digital Twin Providers beschrieben werden. Dabei wird im genaueren Betrachtet wie die Anforderungen aus \vref{sec:dtp} umgesetzt werden können.
+In Folgendem Abschnitt soll der genaue Aufbau eines Digital Twin Providers beschrieben werden. Dabei wird im Genaueren betrachtet, wie die Anforderungen aus \vref{sec:dtp} umgesetzt werden können.
 
 \begin{figure}
     \centering
@@ -428,7 +429,7 @@ Im folgenden Teil wird die Realisierung der Architektur mithilfe verschiedener E
 \clearpage
 \section{Softwarekonzept}
 
-Wie bereits beschrieben soll nun das theoretische Konzept der Architektur mithilfe von konkreten Softwareimplementierungen angereichert werden, um ein funktionsfähiges System abzubilden. Um eine möglichst hohe Barrierefreiheit bei der Umsetzung der in dieser Arbeit beschriebenen Architektur zu gewährleisten wird bei der Wahl der Software auf eine Open Source Verfügbarkeit gesetzt. Dies ermöglicht die freie Nutzung für jeden Anwender. Besonders wird dabei 
+Wie bereits beschrieben soll nun das theoretische Konzept der Architektur mithilfe von konkreten Softwareimplementierungen angereichert werden, um ein funktionsfähiges System abzubilden. Um eine möglichst hohe Barrierefreiheit bei der Umsetzung der in dieser Arbeit beschriebenen Architektur zu gewährleisten wird bei der Wahl der Software auf eine Open Source Verfügbarkeit gesetzt. Dies ermöglicht die freie Nutzung für jeden Anwender. Eine besondere Rolle innerhalb von Open Source nimmt das Eclipse Projekt ein. Eclipse ist bereits seit Jahren bekannt für verschiedenste Open Source Projekte, die auch im Business Umfeld ihre Anwendung finden. Ein Unterprojekt stellt dabei Eclipse IoT dar. Eclipse versucht damit verschiedene Projekte aus dem IoT Umfeld zu sammeln und weiterzuentwickeln. Bei der Wahl der Softwarekomponenten werden vor allem Projekte aus Eclipse IoT verwendet.
 
 \subsection{Eclipse Hono}
 
@@ -451,6 +452,9 @@ Die Unterstützt dieser Protokolle ist mithilfe von Adaptern realisiert. Das bed
 
 \subsection{Eclipse Ditto}
 
+Eclipse Ditto ist ein Projekt, das sich zum Ziel setzt, eine einheitliche Umgebung für digitale Zwillinge bereitzustellen. Einer der größten mitwirkenden Firmen bei diesem Projekt ist unter anderem Bosch. Bosch bietet eine eigene IoT Plattform\footnote{\url{https://www.bosch-iot-suite.com/}} an, welche mithilfe von Eclipse Hono und Eclipse Ditto realisiert wurde. Ditto implementiert alle benötigten Funktionen, um digitale Zwillinge realisieren zu können. Dabei liegt der Fokus vor allem darauf, immer einen Status für den digitalen Zwilling bereitstellen zu können, sodass die wichtige Anforderung der Verfügbarkeit erfüllt ist. Bei der Definition \vref{def:dt} wurde auch eine Anwendung digitaler Zwillinge innerhalb von Simulationen angesprochen. Eclipse Ditto bietet keine Plattform zum definieren und ausführen solcher Simulationen. Allerdings kann eine externe Komponenten genutzt werden, die auf Basis der digitalen Zwillinge in Ditto arbeitet und während einer Simulation mit diesen interagiert.
+
+Ditto bietet eine hervorragende Integration zu Eclipse Hono. Die Kommunikation zwischen diesen beiden Services wird durch \ac{AMQP} sichergestellt. Dittos Connectivity-API bietet die Möglichkeit mittels einer Vorlage Nachrichten so zu transfomieren, dass eine Nachricht im \enquote{Ditto-Protocol} format generiert wird. Diese Nachricht wird dann von Ditto verarbeitet und betroffene digitale Zwillinge werden entsprechend aktualisiert. Ditto kann durch diese API allerdings auch mit mehr Device Registries interagieren, als nur Eclipse Hono. Eine Integration von \textit{The Things Network} ist ebenfalls möglich, da auch hier mithilfe eines Mappings die erhaltenen Telemetriedaten in das \enquote{Ditto-Protocol} transformiert werden können.
 
 \begin{itemize}
     \item Hono als DR
