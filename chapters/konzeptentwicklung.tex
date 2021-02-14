@@ -254,7 +254,7 @@ In der Abbildung \vref{fig:message_flow_amqp} ist der Zusammenhang der verschied
 Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank der \textbf{Direct Exchange} direkt in \ac{AMQP} gelöst. Dies ermöglicht zusätzlich zu allen Funktionen, welche von \ac{MQTT} angeboten werden, einen erweiterten Einsatzbereich.
 
 \pagebreak
-\subsection{LoRaWAN}
+% \subsection{LoRaWAN}
 % \subsection{Anforderungen an ein internes Kommunikationsmittel}
 
 % \begin{itemize}
@@ -264,29 +264,13 @@ Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank de
 %     \item AMQP bietet sich an, da schnell (binary Protocol), unterstützt Req-Res Pattern und ist Brokerbasiert, sodass anfragen gepuffert werden und asynchron abgearbeitet werden können.
 % \end{itemize}
 
-\begin{enumerate}
-    \item Architekturkonzept
-    \begin{itemize}
-        \item Unterscheidung zwischen einer Device-Registry und der Speicherung als DT
-        \begin{itemize}
-            \item Hier liegt der Übergang der Arbeit; Es müssen von Geräten in der Device Registy DTs gebildet werden, nach möglichkeit automatisiert, sodass dann Daten des Gerätes übertragen werden
-        \end{itemize}
-        \item Was muss eine DT-Architektur mit sich bringen, damit Definition erfüllt Ist?
-        \begin{itemize}
-            \item Hier ein wenig auf die Ditto Idee eingehen.
-            \item Konzept hinter Connections erklären; Was sind Connections, Was bringt das an Vorteilen mit sich
-            \item Kombination zwischen Device-Registry und DT (hier liegt das Kernproblem!)
-        \end{itemize}
-        \item Welche Daten sind vorhanden und wie kann sichergestellt werden, dass ein speziell Modell für DT's vorliegt? $\rightarrow$ Hier kommt dan Vorto ins Spiel. Kurz das Konzept und Idee dahinter erläutern
-        \begin{itemize}
-            \item Vorto als Strukturregistry.
-            \item Wieso ist das so wichtig
-            \item welche vorteile gibt es, ein solches ding zu haben
-        \end{itemize}
-    \end{itemize}
-\end{enumerate}
+\section{Nutzung verschiedener Kommunikationsprotokolle}
 
-\section{Wie kann das alles genutzt werden? -- ADAPTER}
+Zusätzlich zu den oben beschriebenen Kommunikationsprotokollen steht eine Device Registry vor der Herausforderung auch andere Protokolle zu integrieren. Dabei gilt es auch darauf zu achten, dass es sich um sehr dynamisches Umfeld mit einer hohen Fluktuation handelt. Das bedeutet, es können neue Protokolle hinzukommen. Um sicherzustellen, dass die Device Registry zukunftssicher ist und nur wenig Wartungsarbeiten getätigt werden müssen, wird eine flexible Implementierung der Protokolle benötigt. Um dies zu erreichen können klare Interfaces definiert werden, die durch verschiedene Implementierungen für die Protokolle konkretisiert werden können. Solche \textbf{Adapter} bieten den Vorteil der einfachen Erweiterbarkeit, sollten neue Protokolle unterstützt werden müssen. Des weiteren können Wartungsarbeiten einfach durchgeführt werden, da die einzelnen Adapter unabhängig voneinander sind und nur sicherstellen müssen, entsprechend dem definierten Interface zu fungieren.
+
+Eine Herausforderung bei der Umsetzung besteht allerdings auch darin, die verschiedenen Transportmechanismen zu ermöglichen. So muss beispielsweise eine grundsätzliche Broker Funktionalität für den \ac{MQTT} Adapter bereitgestellt werden, damit Kommunikationsversuche des Clients entsprechend beantwortet werden können. Auch müssen die unterschiedlichen Standards der Kommunikationsprotokolle erfüllt werden. Standardports müssen verfügbar sein und die Netzwerkkommunikation muss über verschiedene Transportmechanismen (TCP/UDP) offen sein.
+
+
 
 \section{Digital Twin Provider}
 
@@ -493,11 +477,3 @@ In Folgendem Abschnitt soll beschrieben werden, wie ein Deployment der Architekt
 Dazu wird eine Containertechnologie verwendet. Dies ermöglicht eine unabhängige Bereitstellung der einzelnen Komponenten. Das \enquote{containerisieren} einer Komponenten kann mithilfe einer \texttt{Dockerfile} erreicht werden. Eine Herausforderung dabei waren die verwendeten Datenbanken. Um später eine unproblematische Skalierbarkeit gewährleisten zu können, muss sichergestellt werden, dass die Datenbanken nicht mit jeder neuen \enquote{Instanz} einer Komponente repliziert werden, da sonst die bereits Vorhandenen Daten nicht migriert werden. Je nach verwendeter Datenbank stehen unterschiedliche Mechanismen zur Verfügung, die zur Replikation verwendet werden können.
 
 Nachdem eine Datenbankskalierbarkeit sichergestellt ist, kann ein Containerorchestrator ausgewählt werden, der die Bereitstellung der einzelnen Komponenten sicherstellt. Dafür können unter anderem \texttt{docker-compose} oder \texttt{Kubernetes} verwendet werden. Mit \texttt{docker-compose} lassen sich Anwendung auf Basis einer \texttt{docker-composem.yaml} Konfigurationsdatei bereitstellen. Dabei werden virtuelle Services generiert, welche bei der Replikation von Komponenten sicherstellen, dass Anfragen gleichmäßig auf alle Instanzen verteilt werden.
-
-\large{Deployment}
-\normalsize
-\begin{itemize}
-    \item Deplomyent via Container (Docker)
-    \item verschiedene Methoden der Containerorchestrierung (docker-compose, kubernetes)
-    \item Hinzufügen von Hard- und Softwaremonitoring
-\end{itemize}
