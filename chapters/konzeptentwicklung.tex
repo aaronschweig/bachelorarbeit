@@ -26,7 +26,7 @@ Inhärent bedeutet das, dass das Authentifizierungs- und Authorisierungssystem d
 \section{Authentifizierung und Authorisierung von IoT Geräten}
 \label{sec:auth}
 
-Die Authentifizeriung von Geräten im IoT Bereich stellt eine Herausforderung dar. So ist es unpraktisch, für jedes Gerät eigene Zugangsdaten zu generieren und auf dem Gerät zu hinterlegen, damit es sich bei der Device Registry identifizieren kann. Auch birgt es ein Sicherheitsproblem, sollten sich Geräte eigenständig in der Device Registry registrieren können, ohne vorher Beweisen zu können, dass sie Zugriff auf einen bestimmten Namespace haben. \\
+Die Authentifizerung von Geräten im IoT Bereich stellt eine Herausforderung dar. So ist es unpraktisch, für jedes Gerät eigene Zugangsdaten zu generieren und auf dem Gerät zu hinterlegen, damit es sich bei der Device Registry identifizieren kann. Auch birgt es ein Sicherheitsproblem, sollten sich Geräte eigenständig in der Device Registry registrieren können, ohne vorher Beweisen zu können, dass sie Zugriff auf einen bestimmten Namespace haben. \\
 Es gilt also eine Alternative zu finden, welche es ermöglicht Geräte im großen Stil mit Zugangsdaten auszustatten, die allerdings nicht Geräteindividuell angepasst werden müssen.\\
 Um das manuelle Hinterlegen geräteindividueller Zugangsdaten zu vermeiden müssen Alternativen untersucht werden, welche eine Vorauthentifizierung ermöglichen. 
 
@@ -108,7 +108,7 @@ Mithilfe dieser Gerätezugangsdaten kann eine zukünftige Identifikation der Ger
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.0\linewidth]{img/device_authentication.png}
-    \caption[Ablauf der Authentifizierung via Zertifikat]{Ablauf der Authentifizeriung eines Gerätes via Zertifikat.\\ Quelle: Eigene Darstellung}
+    \caption[Ablauf der Authentifizierung via Zertifikat]{Ablauf der Authentifizerung eines Gerätes via Zertifikat.\\ Quelle: Eigene Darstellung}
     \label{fig:certificate}
 \end{figure}
 
@@ -123,7 +123,7 @@ Dieser Nachteil kann allerdings ignoriert werden, sollten es eigene Geräte sein
 
 \subsection{Vergleich beider Authentifizierungsvarianten}
 
-Um einen optimalen Prozess zur Authentifizierung von IoT Geräten zu gewährleisten kann eine Kombination der beiden Varianten genutzt werden. Dabei wird zuerst das Zertifikat verwendet, um sicherzustellen, dass das Gerät berechtigt ist, gerätespezifische Zugangsdaten anzufordern. Anschließend wird mithilfe des Zertifikates die zugehörigen zu einem bestimmten Namespace überprüft. Anschließend kann das Gerät, falls es noch nicht existiert, registriert werden. Danach werden die gerätespezifischen Zugangsdaten von de, Authentication Server generiert und an das Gerät zurückgegeben. Die folgende Kommunikation zwischen dem Gerät und den anderen Kompoenten kann danach mithilfe dieser Informationen erfolgen.
+Um einen optimalen Prozess zur Authentifizierung von IoT Geräten zu gewährleisten kann eine Kombination der beiden Varianten genutzt werden. Dabei wird zuerst das Zertifikat verwendet, um sicherzustellen, dass das Gerät berechtigt ist, gerätespezifische Zugangsdaten anzufordern. Anschließend wird mithilfe des Zertifikates die zugehörigen zu einem bestimmten Namespace überprüft. Anschließend kann das Gerät, falls es noch nicht existiert, registriert werden. Danach werden die gerätespezifischen Zugangsdaten von de, Authentication Server generiert und an das Gerät zurückgegeben. Die folgende Kommunikation zwischen dem Gerät und den anderen Komponenten kann danach mithilfe dieser Informationen erfolgen.
 
 Entsprechend des Anfangs vorgestellten Modells, stellt die Authentifizierung via Zertifikat (asymmetrisch) einen sicheren Kanal zum Austausch der Zugansdaten (symmetrisch) bereit. Der gesamte Authentifizerungsvorgang ist in Abbildung \vref{fig:dev_reg_proc} beschrieben. Außerdem ermöglicht dieses Modell auch die Authentifizierung ohne Zertifikat. Das hat allerdings zur Folge, dass die Zugansinformationen bereits auf dem Gerät hinterlegt sein müssen, was inhärent bedeutet, dass das Gerät bereits in der Device Registry registriert sein muss.
 
@@ -154,7 +154,7 @@ Bei dem \ac{MQTT} handelt es sich um ein sehr populäres Kommunikationsprotokoll
     \end{itemize}
 \end{definition}
 
-Bei der Nutzung des MQTT-Protokolls werden zwei Bestandteile benötigt. Zum einen der \textbf{MQTT-Client}, welcher auf den Endgeräten genutzt wird und eine Kommunikation mit dem \textbf{MQTT-Broker} aufbaut.\\ Kernaufgabe des Brokers ist es dabei, die verschiedenen Topics inklusive den zugehörigen Subscribern und Zustellungsvorgaben zu verwalten. Um eine möglichst hohe Ausfallsicherheit zu gewährleisten können mehrere Broker bereitgestellt werden. Mithilfe entsprechender Konfiguration ist es möglich, im Falle eines Ausfalls auf andere Broker auszuweichen, ohne einen Verbindungs- oder Kommunikationsverlaust zu erleiden.
+Bei der Nutzung des MQTT-Protokolls werden zwei Bestandteile benötigt. Zum einen der \textbf{MQTT-Client}, welcher auf den Endgeräten genutzt wird und eine Kommunikation mit dem \textbf{MQTT-Broker} aufbaut.\\ Kernaufgabe des Brokers ist es dabei, die verschiedenen Topics inklusive den zugehörigen Subscribern und Zustellungsvorgaben zu verwalten. Um eine möglichst hohe Ausfallsicherheit zu gewährleisten, können mehrere Broker bereitgestellt werden. Mithilfe entsprechender Konfiguration ist es möglich, im Falle eines Ausfalls auf andere Broker auszuweichen, ohne einen Verbindungs- oder Kommunikationsverlaust zu erleiden.
 
 Wird das \ac{MQTT} Protokoll innerhalb einer Device Registry genutzt wird nicht der gesamte Funktionsumfang eines Brokers benötigt. Wichtig ist dabei nur, dass Nachrichten, die dem \ac{MQTT} Standard folgen, von der Registry korrekt interpretiert werden können.\\
 Dabei gilt es auch zu unterscheiden, ob es sich um unidirektionale oder bidirektionale Kommunikation handelt. 
@@ -162,7 +162,7 @@ Dabei gilt es auch zu unterscheiden, ob es sich um unidirektionale oder bidirekt
 \subsection*{Unidirektionale Kommunikation}
 Ziel dieser Form der Kommunikation innerhalb dieses spezifischen Anwendungsfalls ist das Senden der Telemetrieinformationen von dem Gerät zu der Device-Regitry, welche im diesem Fall die Rolle des Brokers einnimmt.
 
-Dabei werden hauptsächlich \textit{Telemetrieinformationen} des Gerätes an die Device Registry weitergegeben. 
+Dabei werden hauptsächlich \textit{Telemetrieinformationen} des Gerätes an die Device Registry weitergegeben. Der Rückkanal wird dabei nur von den durch das Protokoll beschriebenen Acknowledgements genutzt.
 
 \begin{figure}[h]
     \centering
@@ -170,6 +170,7 @@ Dabei werden hauptsächlich \textit{Telemetrieinformationen} des Gerätes an die
         \node (dev1) [io] {Endgerät};
         \node (dev2) [process, right of=dev1, xshift=6.5cm] {MQTT-Adapter der Device Registry};
         \draw [arrow] (dev1) -- node[anchor=south] {Telemetry} (dev2);
+        \draw [arrow] (dev2) -- node[anchor=north] {Ack} (dev1);
         \draw [thick, dashed] (dev2) -- (13,0);
     \end{tikzpicture}
     \caption[Unidirektionale Kommunikation]{Unidirektionale Kommunikation zwischen Endgerät und Device Registry.\\Quelle: Eigene Darstellung}
@@ -422,13 +423,35 @@ Als letzte wichtige Komponente wird noch einmal der zuständige Service zur Date
 
 Die Unterstützung mehrerer Kommunikationsprotokolle ermöglicht die Nutzung des Providers mit verschiedenen Device Registries. Wichitg bei der Umsetzung eins Connectivity Service ist die verschiedenen Authentifizierungsarten zu beachten, die eventuell von der Device Registry unerstützt werden. Zudem muss ein gemeinsames Protokoll zur Authentifizierung ausgewählt werden, um eine sichere Kommunikation zwischen den beiden Parteien sicherzustellen.
 
+Im folgenden Teil wird die Realisierung der Architektur mithilfe verschiedener Eclipse Projekte beschrieben. Dabei werden unter anderem Eclipse Hono(Device Registry) und Eclipse Ditto(Digital Twin Provider) verwendet. Die Kommunikation zwischen diesen beiden Komponenten wird mithifle von \ac{AMQP} sichergestellt. So können Telemetriedaten, welche in Eclipse Hono erhalten werden über die PubSub Funktion von AMQP direkt an Eclipse Hono weitergeleitet werden. Ditto kann dann intern sicherstellen, dass der digitale Zwilling den aktuellen Status wiederspiegelt.
+
+\clearpage
+\section{Softwarekonzept}
+
+Wie bereits beschrieben soll nun das theoretische Konzept der Architektur mithilfe von konkreten Softwareimplementierungen angereichert werden, um ein funktionsfähiges System abzubilden. Um eine möglichst hohe Barrierefreiheit bei der Umsetzung der in dieser Arbeit beschriebenen Architektur zu gewährleisten wird bei der Wahl der Software auf eine Open Source Verfügbarkeit gesetzt. Dies ermöglicht die freie Nutzung für jeden Anwender. Besonders wird dabei 
+
+\subsection{Eclipse Hono}
+
+Als Vertreter für die Device Registry kann Eclipse Hono\footnote{\url{https://www.eclipse.org/hono/}} verwendet werden. Hono ist ein geeigneter Vertreter, da es die Anforderungen bzgl. Authentifizerung und unterstützter Protokolle erfüllt. Die interne Aufbau von Hono als Device Registry wurde bereits in Abbildung \vref{fig:device_registry} näher beleuchtet. Hono unterstützt Zertifikate als Möglichkeit zur Authentifizierung.
+
+Um Zertifikate nutzen zu können, müssen allerdings bestimte Vorraussetzungen erfüllt sein. Da ein Zertifikat auch als Informationsquelle zur Identifizierung des Koresspondieren Tenants dient, muss bei der Erstellung des Tenants angegeben werden, welche Zertifkate genutzt damit genutzt werden können. Dies erfordert das manuelle Erstellen eines Zertifkates. Sobald dieses allerdings verfügbar ist, kann der Tenant erfolgreich erstellt werden, und entsprechende Ableger des Zertifikates können auf den Endgeräten hinterlegt werden und zur Authentifizierung genutzt werden. Damit kann der Ablauf aus Abbildung \vref{fig:dev_reg_proc} mithilfe von Eclipse Hono realisiert werden.
+
+Wie bereits erwähnt unterstützt Eclipse Hono auch eine Vielzahl an Kommunikationsprotokollen, sodass eine große Anzahl an Geräten unterstützt werden kann. Zu den Protokollen zählen unter anderem:
+
 \begin{itemize}
-    \item Wo greift alles gut ineinander
-    \item Tatsächliche Überleitung auf Softwareumsetzung
+    \item MQTT
+    \item HTTP
+    \item AMQP
+    \item CoAP
+    \item Sigfox
+    \item LoRaWAN
 \end{itemize}
 
-\large{Softwarekonzept}
-\normalsize
+Die Unterstützt dieser Protokolle ist mithilfe von Adaptern realisiert. Das bedeutet, es können auch, sollten eigene oder neue Protokolle unterstützt werden, neue Adapter implementiert werden. Dies ermöglicht eine hohe Anpassbarkeit, die je nach Anwendungsfall gewährleistet ist.
+
+\subsection{Eclipse Ditto}
+
+
 \begin{itemize}
     \item Hono als DR
     \item Ditto als DT Provider
