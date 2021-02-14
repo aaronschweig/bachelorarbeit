@@ -336,7 +336,7 @@ Zusammenfassend lassen sich folgende Vorteile mit der Nutzung einer Strukturregi
 \end{enumerate}
 
 Sollte es nicht möglich sein, eine unabhängige Strukturregistry bereitzustellen, können diese Vorteile trotzdem erreicht werden. Dafür muss der Digital Twin Provider eine Mapping Engine anbieten, die es ermöglicht Telemetriedaten, die von der Device Registry empfangen werden, zu transformieren. So kann auch ohne den Einsatz einer dedizierten Strukturregistry der Vorteil einer einheitlichen Datenstruktur erreicht werden.\\
-Ein Nachteil dieser leichtgewichten Variante ist jedoch, dass die Kopplung zwischen Digital Twin Provider und Device Registry noch einmal erhöht wird, was die Modularität der Architektur negativ beeinflusst.
+Ein Nachteil dieser leichtgewichtigen Variante ist jedoch, dass die Kopplung zwischen Digital Twin Provider und Device Registry noch einmal erhöht wird, was die Modularität der Architektur negativ beeinflusst.
 
 \subsection{Verwaltung von digitalen Zwillingen}
 
@@ -414,7 +414,7 @@ Wie bereits in der Datenstruktur zu erkennen ist, muss dem digitalen Zwilling ei
 }
 \end{verbatim}
 
-Die Umsetzung eines policy-basierten Zugriffssystems muss eine möglichst hohe Dynamik haben, damit die dynamische Struktur der Daten eines digitalen Zwillings unterstützt werden kann. Es lässt sich ausserdem erkenne, dass auch hier bei der \texttt{policyId} wieder dasselbe Konzept zum Namespacing genutzt wird, wie auch bei der Speicherung des \ac{DT}s an sich. Es können verschiedene \enquote{Rollen} innerhalb der Policy definert werden, welche unterschiedliche Nutzergruppen repräsentieren können. Grundsätzlich folgt die Implementierung aber dem Konzept einer \ac{ACL}. Es werden also \textbf{explizit} alle Nutzer benannt, die Zugriff auf eine Ressource haben. Diese werden innerhalb des \texttt{subject} Keys definiert. Die \texttt{resources} beschreiben ebenfalls \textbf{explizit} welche Operationen genehmigt oder verweigert werden. Die Ressourcen können mittles einer dynamischen Syntax angepasst werden.
+Die Umsetzung eines policy-basierten Zugriffssystems muss eine möglichst hohe Dynamik haben, damit die dynamische Struktur der Daten eines digitalen Zwillings unterstützt werden kann. Es lässt sich außerdem erkennen, dass auch hier bei der \texttt{policyId} wieder dasselbe Konzept zum Namespacing genutzt wird, wie auch bei der Speicherung des \ac{DT}s an sich. Es können verschiedene \enquote{Rollen} innerhalb der Policy definiert werden, welche unterschiedliche Nutzergruppen repräsentieren können. Grundsätzlich folgt die Implementierung aber dem Konzept einer \ac{ACL}. Es werden also \textbf{explizit} alle Nutzer benannt, die Zugriff auf eine Ressource haben. Diese werden innerhalb des \texttt{subject} Keys definiert. Die \texttt{resources} beschreiben ebenfalls \textbf{explizit} welche Operationen genehmigt oder verweigert werden. Die Ressourcen können mittles einer dynamischen Syntax angepasst werden.
 
 \subsection{Verbindung zwischen Digital Twin Provider und Device Registry}
 
@@ -422,7 +422,7 @@ Als letzte wichtige Komponente wird noch einmal der zuständige Service zur Date
 
 \enquote{The “connectivity” service enables Ditto to establish and manage client-side connections to external service endpoints. You can communicate with your connected things/twins over those connections via Ditto Protocol messages. The connectivity service supports various transport protocols, which are bound to the Ditto Protocol via specific Protocol Bindings.}\autocite{ditto}
 
-Die Unterstützung mehrerer Kommunikationsprotokolle ermöglicht die Nutzung des Providers mit verschiedenen Device Registries. Wichitg bei der Umsetzung eins Connectivity Service ist die verschiedenen Authentifizierungsarten zu beachten, die eventuell von der Device Registry unerstützt werden. Zudem muss ein gemeinsames Protokoll zur Authentifizierung ausgewählt werden, um eine sichere Kommunikation zwischen den beiden Parteien sicherzustellen.
+Die Unterstützung mehrerer Kommunikationsprotokolle ermöglicht die Nutzung des Providers mit verschiedenen Device Registries. Wichtig bei der Umsetzung eins Connectivity Service ist die verschiedenen Authentifizierungsarten zu beachten, die eventuell von der Device Registry unerstützt werden. Zudem muss ein gemeinsames Protokoll zur Authentifizierung ausgewählt werden, um eine sichere Kommunikation zwischen den beiden Parteien sicherzustellen.
 
 Im folgenden Teil wird die Realisierung der Architektur mithilfe verschiedener Eclipse Projekte beschrieben. Dabei werden unter anderem Eclipse Hono(Device Registry) und Eclipse Ditto(Digital Twin Provider) verwendet. Die Kommunikation zwischen diesen beiden Komponenten wird mithifle von \ac{AMQP} sichergestellt. So können Telemetriedaten, welche in Eclipse Hono erhalten werden über die PubSub Funktion von AMQP direkt an Eclipse Hono weitergeleitet werden. Ditto kann dann intern sicherstellen, dass der digitale Zwilling den aktuellen Status wiederspiegelt.
 
@@ -456,13 +456,35 @@ Eclipse Ditto ist ein Projekt, das sich zum Ziel setzt, eine einheitliche Umgebu
 
 Ditto bietet eine hervorragende Integration zu Eclipse Hono. Die Kommunikation zwischen diesen beiden Services wird durch \ac{AMQP} sichergestellt. Dittos Connectivity-API bietet die Möglichkeit mittels einer Vorlage Nachrichten so zu transfomieren, dass eine Nachricht im \enquote{Ditto-Protocol} format generiert wird. Diese Nachricht wird dann von Ditto verarbeitet und betroffene digitale Zwillinge werden entsprechend aktualisiert. Ditto kann durch diese API allerdings auch mit mehr Device Registries interagieren, als nur Eclipse Hono. Eine Integration von \textit{The Things Network} ist ebenfalls möglich, da auch hier mithilfe eines Mappings die erhaltenen Telemetriedaten in das \enquote{Ditto-Protocol} transformiert werden können.
 
+Des weiteren ist es mit Ditto möglich eine Sturkturregistry zu integrieren. Ein weiteres Eclipse Project, Eclipse Vorto, kann dafür genutzt werden. Eine Integration mit Vorto ist allerdings aktuell noch in der Entwicklung, sodass die konkrete Umsetzung und Anwendbarkeit noch nicht final bewertet werden kann. Eine vorabintegration ist allerdings bereits jetzt schon möglich. Dies wird ermöglicht, indem bei der Speicherung der \ac{DT}s ein bestimmten Eintrag in Vorto referenziert werden kann. Vorto stellt dabei eine vollständig optionale Ergänzung dar, da Strukturinformationen auch in Ditto definiert werden können. 
+
+Auch die Zugriffsteuerung auf bestimmte Attribute eines digitalen Zwillings ist mit Ditto möglich. Eine eigene Policy API stellt sicher, dass klar definiert ist, welche externen Nutzer Zurgiff auf welche Informationen haben. 
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node distance=5cm]
+        \node (device) [io] {Endgerät};
+        \node (hono) [process, right of=device] {Eclipse Hono};
+        \node (ditto) [process, below of=hono] {Eclipse Ditto};
+        \node (vorto) [process, right of=ditto, fill=blue!50] {Eclipse Vorto};
+        \node (application) [startstop, below of=device] {External Application};
+        \node (connector) [process, fill=green!30, right of=hono] {Connector};
+    
+        \draw [arrow] (device) -- (hono);
+        \draw [arrow] (hono) -- (ditto);
+        \draw [arrow] (ditto) -- (application);
+        \draw [arrow] (hono) -- (connector);
+        \draw [arrow] (connector) -- (ditto);
+        \draw [arrow] (vorto) -- (ditto);
+    \end{tikzpicture}
+    \caption[Realisierung der Architektur mit Eclipse Projekten]{Realsisierung der Architektur mit Eclipse Projekten.\\Quelle: Eigene Darstellung}
+\end{figure}
+
+\subsection{Umsetzung des Connectors}
+
 \begin{itemize}
-    \item Hono als DR
-    \item Ditto als DT Provider
-    \item Vorto als Strukturrepository
     \item \enquote{Am Beispiel eines Sensors mit LoRaWAN und TTN}
     \item Beschreiben der Schritte innerhalb der Umsetzung (Go-App)
-    \item 
 \end{itemize}
 
 \large{Deployment}
