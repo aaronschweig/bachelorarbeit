@@ -60,30 +60,9 @@
 
 \chapter{Einleitung}
 
-\begin{enumerate}
-	\item Einleitung
-	\item Grundlagen zu Digital Twins
-	\begin{enumerate}
-		\item Was sind DTs
-		\begin{itemize}
-			\item Unterscheidung verschiedener Arten und Abgrenzung zum CBS
-		\end{itemize}
-	\end{enumerate}
-	\item Problemstellung und Lösungsansatz
-	\begin{enumerate}
-		\item Automatische Erzeugung digitaler Zwillinge
-		\item Ist-Zustand in der aktuellen Umgebung
-		\item Soll-Zustand
-		\item Delta zwischen Ist und Soll
-	\end{enumerate}
-	\item Prototypische Implementierung 
-	\item Fazit und Ausblick
-	\begin{itemize}
-		\item Mögliche Integration in die Eclipse Landschaft
-		\item 
-		\item ...
-	\end{itemize}
-\end{enumerate}
+Die Welt der Industrie befindet sich zur Zeit in einem digitalen Aufschwung. Firmen bauen zunehmend auf IoT-Lösungen, um ihre Fabriken zu steuern und kontollieren. Dabei kommen ständig neue Technologien zum Einsatz. Digitale Zwillinge spielen dabei eine wesentliche Rolle und ermöglichen eine zuvor nie dagewesene Anwendung von KI und Machine Learning Algorithmen. Wie bei jeder neuen Technologie, bringt auch der digitale Zwilling diverse Probleme mit sich. Diese Arbeit befasst sich mit der Problematik der automatischen Erstellung digitaler Zwillinge. Durch den Einsatz von mehr und mehr Sensoren in weiten Teilbereichen der Produktion bietet sich ein großflächiger Einsatz digitaler Zwillinge an. So können digitale Zwillinge nicht nur im Mikroökosystem auf Sensorenebene eingesetzt werden, sondern es können auch digitale Zwillinge ganzer Produktionslinien gebildet werden. Um dieser sehr dynamischen Idee gerecht zu werden muss eine Lösung zur automatischen Erstellung digitaler Zwillinge entwickelt werden. 
+
+Im Rahmen dieser Arbeit werden die wesentlichen Komponenten, die bei der Erstellung digitaler Zwillinge beteiligt sind, betrachtet. Dabei werden sowohl funktionelle Anforderungen, als auch technische Anforderungen untersucht. Zu Beginn wird dazu eine Defintion digitaler Zwillinge vorgenommen. Auf Basis dieser Defintion werden dann die Problemstellung und ein möglicher Lösungsansatz näher beleuchtet. Daraus lassen sich Anforderungen an die einzelnen Komponenten ableiten, welche näher beschrieben werden. Zuletzt werden die Herausforderungen und Anforderungen in einem Konzept zur automatischen Erzeugung digitaler Zwillinge vereint. Ebenfalls wird mithilfe einer prototypischen Implementierung die Funktionsfähigkeit des Konzepts überprüft.
 
 % % CHAPTER: Grundlagen DT's
 \input{chapters/grundlagen_dt.tex}
@@ -98,10 +77,11 @@ Gerade im Bereich des zusätzlich entwickelten Services können im Rahmen weiter
 
 Eine weitere Möglichkeit der Erweiterung liegt darin, weitere Methoden der Authentifizierung zu untersuchen. Es können unter anderem Ansätze von \citeauthor{fang2020fast} genutzt werden um mithilfe von Machine Learning Verbesserungen bei der Sicherheit großer IoT Anwendungsfälle zu erreichen. \autocite{fang2020fast} So könnte untersucht werden, ob und inwiefern das Konzept umsetzbar ist und welche Auswirkungen es konkret auf die Nutzung digitaler Zwillinge hätte. 
 
-In zukünftigen Arbeiten könnte nachdem in dieser Arbeit die automatische Erstellung näher betrachet wurde ein anderer Aspekt der einen digitalen Zwilling ausmacht näher beleuchtet werden. Digitale Zwilling bieten die Möglichkeit Simulationen in einer virtuellen Umgebung durchzuführen. Die in dieser Arbeit präsentierte Architektur legt Grundlagen dafür, indem sichergestellt wird, dass digitale Zwillinge vorhanden sind und immer mit den aktuellsten Informationen versorgt werden. In einem nächsten Schritt könnte die Integration einer Simulationsumgebung untersucht werden. Das Hinzufügen dieser Umgebung ermöglicht digitalen Zwillingen einen höheren Mehrwert zu bieten.
+In zukünftigen Arbeiten könnte, nachdem in dieser Arbeit die automatische Erstellung näher betrachet wurde, ein anderer Aspekt digitaler Zwillinge näher beleuchtet werden. Digitale Zwillinge bieten die Möglichkeit Simulationen in einer virtuellen Umgebung durchzuführen. Die in dieser Arbeit präsentierte Architektur legt Grundlagen dafür, indem sichergestellt wird, dass digitale Zwillinge vorhanden sind und immer mit den aktuellsten Informationen versorgt werden. In einem nächsten Schritt könnte die Integration einer Simulationsumgebung untersucht werden. Das Hinzufügen dieser Umgebung ermöglicht digitalen Zwillingen einen höheren Mehrwert zu bieten.
 
-Vorantriebn der Ditto/Vorto integration
+Ein weiterer Punkt, der von einer näheren Betrachtung profitieren könnte, ist die Integration zwischen Eclipse Vorto und Eclipse Ditto. Da noch keine konkrete Umsetzung von den Enwticklerteams bereitsteht könnte eine Untersuchung verschiedenen Integrationsmethoden diesen Prozess voranbringen. Außerdem würde so sichergestellt, dass eine möglichst optimale und flexible Lösung implementiert würde. Insbesondere die Betrachtung der von Vorto gewählten \ac{DSL} kann wichtige Einblicke bieten. Durch eine nähere Betrachtung würden beide Projekte profitieren und die Einführung eines industrieweiten Standards könnte auf Basis wissenschaftlicher Erkenntnisse stattfinden.
 
+Zusammenfassend kann gesagt werden, dass das Ziel der Arbeit eine Referenzarchitektur zur automatischen Erstellung digitaler Zwillinge bereitzustellen erreicht wurde. Mithilfe verschiedener Eclipse Projekte konnte ein Prototyp entwickelt werden, der entsprechend der in dieser Arbeit definierten Anforderungen agieren kann. Dies ermöglicht eine einfache Integration digitaler Zwillinge in das Unternehmensumfeld. Mithilfe der oben beschriebenen Erweiterungsmöglichkeiten können dann weitere Funktionen integriert werden und es wird eine hohe Kompatibiliät zwischen unterschiedlichen Softwareumsetzungen gewährleistet, sodass das richtige Wekrzeug für den in einem Unternehmen gegebenen Anwendungsfall gewählt werden kann.
 %	Literaturverzeichnis
 \clearpage
 \ihead{}

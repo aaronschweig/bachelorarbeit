@@ -134,6 +134,7 @@ Entsprechend des Anfangs vorgestellten Modells, stellt die Authentifizierung via
     \label{fig:dev_reg_proc}
 \end{figure}
 
+\clearpage
 \section{Sicherstellen der Device Connectivity in der Device Registry}
 
 Der Device Registry fällt ebenfalls die Aufgabe zu, sicherzustellen, dass eine Vielzahl verschiedener Kommunikationsprotokolle unterstützt wird, damit ein Verbindungsaufbau mit einer Vielzahl von Geräten möglich ist. Im folgenden werden verschiedene Kommunikationsprotokolle vorgestellt, sowie kurz deren jeweilige Vor- und Nachteile beleuchtet. Im nächsten Schritt wird die Wahl eines asynchronen, internen Kommunikationsmittels beschrieben.
@@ -192,7 +193,7 @@ Im Gegensatz zu der unidirektionalen Kommunikation steht bei der bidirektionalen
 \end{figure}
 
 Eine Besonderheit der bidirektionalen Kommunikation mittels \ac{MQTT} stellt das fehlende Request-Response Pattern dar. Bei anderen Protokollen (wie z.B. HTTP) ist in das Protokoll ein Mechanismus eingebaut, um auf die Anfrage eines Clients eine Antwort an nur diesen Client zurückzugeben. Dieses Konzept wurde innerhalb der MQTT Spezifikation nicht umgesetzt. Stattdessen kann dort mittels klar definierten Topic Strukturen ein Request-Reponse Pattern integriert werden.
-\pagebreak
+
 \begin{example}[Request-Response innerhalb von MQTT] Eine examplarische Methode zur Integration eines Request-Response Pattern kann folgender Abbildung entnommen werden. Dabei ist zu erkennen, dass das Zeil mithilfe einer bestimmten Topicstruktur erreicht wird. Diese Topicstrukturen können innerhalb von MQTT nicht erzwungen werden, sodass nicht sichergestellt ist, dass dieses Konzept zuverlässig funktionert.
 
     \begin{figure}[h]
@@ -213,6 +214,7 @@ Eine Besonderheit der bidirektionalen Kommunikation mittels \ac{MQTT} stellt das
 Zur Nutzung des \ac{MQTT} Protokolls muss eine Device Registry eine Möglichkeit bereitstellen, via MQTT mit Endgeräten zu kommunizieren. Um dieses Ziel zu erreichen kann ein Broker verwendet werden. Ein sehr populärer Vertreter eines Brokers stellt das Eclipse Mosquitto Projekt dar.\\
 Gleichzeitig muss eine authentifizierte Kommunikation gewährleistet werden können. Wie in \vref{sec:auth} beschrieben, wird vorgelagert mittels eines Zertifikats sichergestellt, dass das Endgerät eindeutig identifizierbare Zugangsdaten besitzt. Diese Zugangsdaten können verwendet werden, um mithilfe eines eindeutigen Identifikators des Namespaces die \texttt{username} und \texttt{password} Informationen während der Kommunikation zu nutzen.
 
+\clearpage
 \subsection{AMQP}
 
 \begin{definition}
@@ -253,7 +255,6 @@ In der Abbildung \vref{fig:message_flow_amqp} ist der Zusammenhang der verschied
 
 Der Nachteil eines fehlenden Request-Response Patterns von \ac{MQTT} ist dank der \textbf{Direct Exchange} direkt in \ac{AMQP} gelöst. Dies ermöglicht zusätzlich zu allen Funktionen, welche von \ac{MQTT} angeboten werden, einen erweiterten Einsatzbereich.
 
-\pagebreak
 % \subsection{LoRaWAN}
 % \subsection{Anforderungen an ein internes Kommunikationsmittel}
 
@@ -322,6 +323,7 @@ Zusammenfassend lassen sich folgende Vorteile mit der Nutzung einer Strukturregi
 Sollte es nicht möglich sein, eine unabhängige Strukturregistry bereitzustellen, können diese Vorteile trotzdem erreicht werden. Dafür muss der Digital Twin Provider eine Mapping Engine anbieten, die es ermöglicht Telemetriedaten, die von der Device Registry empfangen werden, zu transformieren. So kann auch ohne den Einsatz einer dedizierten Strukturregistry der Vorteil einer einheitlichen Datenstruktur erreicht werden.\\
 Ein Nachteil dieser leichtgewichtigen Variante ist jedoch, dass die Kopplung zwischen Digital Twin Provider und Device Registry noch einmal erhöht wird, was die Modularität der Architektur negativ beeinflusst.
 
+\clearpage
 \subsection{Verwaltung von digitalen Zwillingen}
 
 Ein weiterer wichtiger Aspekt ist die Verwaltung digitaler Zwillinge. Der Digital Twin Provider erhält die Telemetriedaten über die Device Registry. Es gilt aber zusätzlich statische Informationen über den \ac{DT} zu verwalten. Dafür müssen entsprechende API Schnittstellen bereitgestellt werden.
@@ -410,7 +412,6 @@ Die Unterstützung mehrerer Kommunikationsprotokolle ermöglicht die Nutzung des
 
 Im folgenden Teil wird die Realisierung der Architektur mithilfe verschiedener Eclipse Projekte beschrieben. Dabei werden unter anderem Eclipse Hono(Device Registry) und Eclipse Ditto(Digital Twin Provider) verwendet. Die Kommunikation zwischen diesen beiden Komponenten wird mithifle von \ac{AMQP} sichergestellt. So können Telemetriedaten, welche in Eclipse Hono erhalten werden über die PubSub Funktion von AMQP direkt an Eclipse Hono weitergeleitet werden. Ditto kann dann intern sicherstellen, dass der digitale Zwilling den aktuellen Status wiederspiegelt.
 
-\clearpage
 \section{Softwarekonzept}
 
 Wie bereits beschrieben soll nun das theoretische Konzept der Architektur mithilfe von konkreten Softwareimplementierungen angereichert werden, um ein funktionsfähiges System abzubilden. Um eine möglichst hohe Barrierefreiheit bei der Umsetzung der in dieser Arbeit beschriebenen Architektur zu gewährleisten, wird bei der Wahl der Software auf eine Open Source Verfügbarkeit gesetzt. Dies ermöglicht die freie Nutzung für jeden Anwender. Eine besondere Rolle innerhalb von Open Source nimmt das Eclipse Projekt ein. Eclipse ist bereits seit Jahren bekannt für verschiedenste Open Source Projekte, die auch im Business Umfeld ihre Anwendung finden. Ein Unterprojekt stellt dabei Eclipse IoT dar. Eclipse versucht damit verschiedene Projekte aus dem IoT Umfeld zu sammeln und weiterzuentwickeln. Bei der Wahl der Softwarekomponenten werden vor allem Projekte aus Eclipse IoT verwendet.
@@ -440,7 +441,8 @@ Eclipse Ditto ist ein Projekt, das sich zum Ziel setzt, eine einheitliche Umgebu
 
 Ditto bietet eine hervorragende Integration zu Eclipse Hono. Die Kommunikation zwischen diesen beiden Services wird durch \ac{AMQP} sichergestellt. Dittos Connectivity-API bietet die Möglichkeit mittels einer Vorlage Nachrichten so zu transfomieren, dass eine Nachricht im \enquote{Ditto-Protocol} Format generiert wird. Diese Nachricht wird dann von Ditto verarbeitet und betroffene digitale Zwillinge werden entsprechend aktualisiert. Ditto kann durch diese API allerdings auch mit mehr Device Registries interagieren, als nur Eclipse Hono. Eine Integration von \textit{The Things Network} ist ebenfalls möglich, da auch hier mithilfe eines Mappings die erhaltenen Telemetriedaten in das \enquote{Ditto-Protocol} transformiert werden können.
 
-Des weiteren ist es mit Ditto möglich eine Sturkturregistry zu integrieren. Ein weiteres Eclipse Project, Eclipse Vorto, kann dafür genutzt werden. Eine Integration mit Vorto ist allerdings aktuell noch in der Entwicklung, sodass die konkrete Umsetzung und Anwendbarkeit noch nicht final bewertet werden kann. Eine vorabintegration ist allerdings bereits jetzt schon möglich. Dies wird ermöglicht, indem bei der Speicherung der \ac{DT}s ein bestimmten Eintrag in Vorto referenziert werden kann. Vorto stellt dabei eine vollständig optionale Ergänzung dar, da Strukturinformationen auch in Ditto definiert werden können. 
+Des weiteren ist es mit Ditto möglich eine Sturkturregistry zu integrieren. Ein weiteres Eclipse Project, Eclipse Vorto, kann dafür genutzt werden. Eine Integration mit Vorto ist allerdings aktuell noch in der Entwicklung, sodass die konkrete Umsetzung und Anwendbarkeit noch nicht final bewertet werden kann. Eine vorabintegration ist allerdings bereits jetzt schon möglich. Dies wird ermöglicht, indem bei der Speicherung der \ac{DT}s ein bestimmten Eintrag in Vorto referenziert werden kann. Vorto stellt dabei eine vollständig optionale Ergänzung dar, da Strukturinformationen auch in Ditto definiert werden können.\\
+Die in Ditto definierten Strukturinformationen beinhalten nur Informationen darüber, welche Telemetriedaten in einem Zwilling vorhanden sind. Tiefergehende Informationen bzgl. des Datenformats oder der Zusammenstellung von Informationen aus Teildaten sind dabei nicht vorhanden. Um diese Informationen in Ditto zu hinterlegen kann die integrierte Mapping Engine verwendet werden. Dort findet sich die Logik, welche Datenformate bestimmten Feldern zuzuordnen ist.
 
 Auch die Zugriffsteuerung auf bestimmte Attribute eines digitalen Zwillings ist mit Ditto möglich. Eine eigene Policy API stellt sicher, dass klar definiert ist, welche externen Nutzer Zurgiff auf welche Informationen haben. 
 
@@ -470,10 +472,12 @@ Die Implementierung des Connectors erfolgte in zwei Schritten. Zuerst wurde ein 
 
 Die im ersten Schritt entwickelten Funktionen konnten verwendet werden, um einen generischen Einsatz des Connetors zu ermöglichen. Mithilfe klar definierter Interfaces wird sichergestellt, dass ähnlich der Implenetierung der Adapter von Eclipse Hono, neue Device Registries einfach hinzugefügt werden können. So wurde eine Schnittstelle zu einer Hono Instanz hinzugefügt.
 
+Außerdem wurde im Rahmen der Erweiterung noch Monitoring zu dem Connector hinzugefügt. Das wurde mittels einer Prometheus\footnote{\url{https://prometheus.io/}} Integration realisiert. Mithilfe der gesammelten Metriken ist es möglich, sicherzustellen, dass während eines produktiven Einsatz keine Probleme auftreten.\autocite{boncea2016system}
+
 \section{Bereitstellung der Software}
 
 In Folgendem Abschnitt soll beschrieben werden, wie ein Deployment der Architektur sichergestellt werden kann, sodass die verschiedenen Komponenten miteinander kommunizieren können und im Fehlerfall schnell reagiert werden kann.
 
 Dazu wird eine Containertechnologie verwendet. Dies ermöglicht eine unabhängige Bereitstellung der einzelnen Komponenten. Das \enquote{containerisieren} einer Komponenten kann mithilfe einer \texttt{Dockerfile} erreicht werden. Eine Herausforderung dabei waren die verwendeten Datenbanken. Um später eine unproblematische Skalierbarkeit gewährleisten zu können, muss sichergestellt werden, dass die Datenbanken nicht mit jeder neuen \enquote{Instanz} einer Komponente repliziert werden, da sonst die bereits Vorhandenen Daten nicht migriert werden. Je nach verwendeter Datenbank stehen unterschiedliche Mechanismen zur Verfügung, die zur Replikation verwendet werden können.
 
-Nachdem eine Datenbankskalierbarkeit sichergestellt ist, kann ein Containerorchestrator ausgewählt werden, der die Bereitstellung der einzelnen Komponenten sicherstellt. Dafür können unter anderem \texttt{docker-compose} oder \texttt{Kubernetes} verwendet werden. Mit \texttt{docker-compose} lassen sich Anwendung auf Basis einer \texttt{docker-composem.yaml} Konfigurationsdatei bereitstellen. Dabei werden virtuelle Services generiert, welche bei der Replikation von Komponenten sicherstellen, dass Anfragen gleichmäßig auf alle Instanzen verteilt werden.
+Nachdem eine Datenbankskalierbarkeit sichergestellt ist, kann ein Containerorchestrator ausgewählt werden, der die Bereitstellung der einzelnen Komponenten sicherstellt. Dafür können unter anderem \texttt{docker-compose} oder \texttt{Kubernetes} verwendet werden. Mit \texttt{docker-compose} lassen sich Anwendung auf Basis einer \texttt{docker-composem.yaml} Konfigurationsdatei bereitstellen. Dabei werden virtuelle Services generiert, welche bei der Replikation von Komponenten sicherstellen, dass Anfragen gleichmäßig auf alle Instanzen verteilt werden. 
